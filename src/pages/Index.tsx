@@ -1,7 +1,7 @@
 
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { HeroSection } from "@/components/home/HeroSection";
+import { InstituteHero } from "@/components/layout/InstituteHero";
 import { FeaturedPitch } from "@/components/home/FeaturedPitch";
 import { PitchCategories } from "@/components/home/PitchCategories";
 import { AchieverSpotlight } from "@/components/home/AchieverSpotlight";
@@ -16,7 +16,14 @@ const Index = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-grow">
-        <HeroSection />
+        <InstituteHero 
+          instituteName="Institute Pitchburg Hub"
+          tagline="Where Young Innovators Shape Tomorrow"
+          description="Join our vibrant community of student innovators showcasing groundbreaking ideas, social initiatives, and transformative projects."
+          primaryActionText="Explore Pitches"
+          secondaryActionText="Learn More"
+          backgroundImage="public/lovable-uploads/f857c92c-a7ff-404a-923e-2877e32530e0.png"
+        />
         <FeaturedPitch />
         <PitchCategories />
         <EventsCalendar />

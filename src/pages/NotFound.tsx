@@ -5,6 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { InstituteHero } from "@/components/layout/InstituteHero";
 
 const NotFound = () => {
   const location = useLocation();
@@ -19,14 +20,17 @@ const NotFound = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-grow flex items-center justify-center bg-gray-50 py-20">
-        <div className="text-center max-w-lg px-6">
+      <main className="flex-grow">
+        <InstituteHero 
+          instituteName="Institute Pitchburg"
+          tagline="Page Not Found"
+          description="The page you are looking for might have been removed, had its name changed, or is temporarily unavailable."
+          primaryActionText="Return to Home"
+          primaryActionHref="/"
+        />
+        
+        <div className="text-center max-w-lg mx-auto px-6 py-12">
           <div className="text-8xl font-bold text-pitchburg-purple mb-6">404</div>
-          <h1 className="text-3xl font-bold font-display mb-4">Page Not Found</h1>
-          <p className="text-gray-600 mb-8">
-            The page you are looking for might have been removed, had its name changed, 
-            or is temporarily unavailable.
-          </p>
           <Button asChild className="bg-pitchburg-purple hover:bg-purple-600">
             <Link to="/">Return to Home</Link>
           </Button>

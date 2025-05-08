@@ -2,484 +2,405 @@
 import { useState } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { motion } from "framer-motion";
+import { InstituteHero } from "@/components/layout/InstituteHero";
+import { Button } from "@/components/ui/button";
 import { 
   Tabs, 
   TabsContent, 
   TabsList, 
   TabsTrigger 
 } from "@/components/ui/tabs";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
+import { 
+  Card, 
+  CardContent, 
+  CardDescription, 
+  CardFooter, 
+  CardHeader, 
+  CardTitle 
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import { 
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from "@/components/ui/form";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { 
-  Upload, 
-  Download, 
   FileText, 
-  Certificate, 
+  Download, 
+  Award, 
   Mail, 
   Users, 
-  Award, 
-  Search,
-  Link
+  Upload, 
+  PenLine,
+  MessageSquare,
+  Building,
+  Handshake
 } from "lucide-react";
-
-// Form schema for pitch submission
-const submitPitchSchema = z.object({
-  title: z.string().min(5, "Title must be at least 5 characters"),
-  category: z.string().min(1, "Please select a category"),
-  description: z.string().min(20, "Description must be at least 20 characters"),
-  team: z.string().min(3, "Team name must be at least 3 characters"),
-  email: z.string().email("Please enter a valid email")
-});
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { motion } from "framer-motion";
 
 const SubmitResources = () => {
-  const [activeTab, setActiveTab] = useState("submit");
-
-  // Form setup
-  const form = useForm<z.infer<typeof submitPitchSchema>>({
-    resolver: zodResolver(submitPitchSchema),
-    defaultValues: {
-      title: "",
-      category: "",
-      description: "",
-      team: "",
-      email: ""
-    }
-  });
-
-  // Mock data for resources
-  const resources = {
-    documents: [
-      { id: 1, title: "Pitch Guidelines 2025", type: "PDF", size: "1.2 MB", date: "April 1, 2025" },
-      { id: 2, title: "Submission Template", type: "DOCX", size: "540 KB", date: "April 5, 2025" },
-      { id: 3, title: "Judging Criteria", type: "PDF", size: "890 KB", date: "April 2, 2025" },
-      { id: 4, title: "Competition Rules", type: "PDF", size: "1.5 MB", date: "April 1, 2025" }
-    ],
-    certificates: [
-      { id: 1, title: "Innovation Challenge Winner 2024", date: "December 15, 2024", status: "Available" },
-      { id: 2, title: "Project Expo Participation", date: "March 20, 2025", status: "Available" },
-      { id: 3, title: "Hackathon Finalist", date: "February 10, 2025", status: "Processing" }
-    ],
-    connections: [
-      { id: 1, name: "Campus Innovation Network", type: "Student Club", status: "Open for Collaboration" },
-      { id: 2, name: "Tech Startup Accelerator", type: "Industry", status: "Accepting Applications" },
-      { id: 3, name: "Social Impact Foundation", type: "Non-profit", status: "Seeking Partners" },
-      { id: 4, name: "Global Education Network", type: "Academic", status: "Exchange Program Available" }
-    ]
-  };
-
-  // Handle form submission
-  const onSubmit = (data: z.infer<typeof submitPitchSchema>) => {
-    console.log("Form submitted:", data);
-    // We would typically send this data to a backend API
-    // Show success message using toast
-    alert("Pitch submitted successfully! We'll review your submission and get back to you soon.");
-    form.reset();
-  };
-
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
+  const [activeTab, setActiveTab] = useState("submit-pitch");
   
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.4 }
-    }
-  };
-
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-grow">
+        <InstituteHero 
+          instituteName="Pitchburg Innovation Hub"
+          tagline="Submit, Connect, and Grow with Us"
+          description="Access resources, submit your pitch, and connect with our innovation ecosystem all in one place."
+          pageTitle="Submit & Resources"
+        />
+        
         <div className="container mx-auto px-4 py-12">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-center mb-12"
+            className="mb-12"
           >
-            <h1 className="text-4xl font-bold font-display mb-4">Submit & Resources</h1>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Submit your pitch, download resources, access certificates, and connect with our network
-            </p>
-          </motion.div>
-
-          <Tabs 
-            defaultValue="submit" 
-            value={activeTab} 
-            onValueChange={setActiveTab}
-            className="max-w-5xl mx-auto"
-          >
-            <div className="flex justify-center mb-8">
-              <TabsList className="bg-gray-100 grid grid-cols-2 md:grid-cols-4 w-full max-w-2xl">
-                <TabsTrigger 
-                  value="submit" 
-                  className="data-[state=active]:bg-pitchburg-purple data-[state=active]:text-white"
-                >
-                  <Upload className="h-4 w-4 mr-2" />
-                  Submit
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="documents" 
-                  className="data-[state=active]:bg-pitchburg-purple data-[state=active]:text-white"
-                >
-                  <FileText className="h-4 w-4 mr-2" />
-                  Documents
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="certificates" 
-                  className="data-[state=active]:bg-pitchburg-purple data-[state=active]:text-white"
-                >
-                  <Certificate className="h-4 w-4 mr-2" />
-                  Certificates
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="connect" 
-                  className="data-[state=active]:bg-pitchburg-purple data-[state=active]:text-white"
-                >
-                  <Users className="h-4 w-4 mr-2" />
-                  Connect
-                </TabsTrigger>
+            <Tabs 
+              defaultValue="submit-pitch" 
+              value={activeTab}
+              onValueChange={setActiveTab}
+              className="w-full"
+            >
+              <TabsList className="grid grid-cols-3 w-full max-w-2xl mx-auto mb-8">
+                <TabsTrigger value="submit-pitch">Submit Your Pitch</TabsTrigger>
+                <TabsTrigger value="resources">Resources & Documents</TabsTrigger>
+                <TabsTrigger value="connect">Connect & Partner</TabsTrigger>
               </TabsList>
-            </div>
-
-            {/* Submit Pitch Tab */}
-            <TabsContent value="submit" className="animate-fade-in">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Submit Your Pitch</CardTitle>
-                  <CardDescription>
-                    Share your innovative idea with our community. Complete the form below to submit your pitch for review.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <FormField
-                          control={form.control}
-                          name="title"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Pitch Title</FormLabel>
-                              <FormControl>
-                                <Input placeholder="Enter the title of your pitch" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="category"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Category</FormLabel>
-                              <FormControl>
-                                <select 
-                                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                  {...field}
-                                >
-                                  <option value="">Select a category</option>
-                                  <option value="innovation">Innovation</option>
-                                  <option value="social">Social Project</option>
-                                  <option value="tech">Tech Project</option>
-                                  <option value="environmental">Environmental</option>
-                                </select>
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-
-                      <FormField
-                        control={form.control}
-                        name="description"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Description</FormLabel>
-                            <FormControl>
-                              <textarea 
-                                className="flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                placeholder="Describe your pitch in detail (problem, solution, impact)"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <FormField
-                          control={form.control}
-                          name="team"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Team Name</FormLabel>
-                              <FormControl>
-                                <Input placeholder="Enter your team name" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="email"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Contact Email</FormLabel>
-                              <FormControl>
-                                <Input placeholder="Enter contact email" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-
-                      <div className="border border-dashed border-gray-300 rounded-lg p-6 text-center">
-                        <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-                        <p className="text-sm font-medium mb-1">Upload Supporting Documents</p>
-                        <p className="text-xs text-gray-500 mb-4">Drag and drop files or click to browse (PDF, DOCX, PPT, max 10MB)</p>
-                        <Button type="button" variant="outline" size="sm">Select Files</Button>
-                      </div>
-                    </form>
-                  </Form>
-                </CardContent>
-                <CardFooter className="flex justify-between">
-                  <Button variant="outline" onClick={() => form.reset()}>Reset</Button>
-                  <Button 
-                    className="bg-pitchburg-purple hover:bg-purple-600"
-                    onClick={form.handleSubmit(onSubmit)}
-                  >
-                    Submit Pitch
-                  </Button>
-                </CardFooter>
-              </Card>
-            </TabsContent>
-
-            {/* Documents Tab */}
-            <TabsContent value="documents" className="animate-fade-in">
-              <Card>
-                <CardHeader>
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle>Official Documents</CardTitle>
-                      <CardDescription>
-                        Access and download official guidelines, templates, and resources
-                      </CardDescription>
-                    </div>
-                    <div className="relative">
-                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                      <Input 
-                        placeholder="Search documents" 
-                        className="pl-10 w-[200px] md:w-[300px]"
-                      />
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <motion.div 
-                    className="space-y-4"
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate="visible"
-                  >
-                    {resources.documents.map((document) => (
-                      <motion.div 
-                        key={document.id}
-                        variants={itemVariants}
-                        className="flex items-center justify-between p-4 border border-gray-100 rounded-lg hover:bg-gray-50"
-                      >
-                        <div className="flex items-center">
-                          <div className="bg-pitchburg-light-purple/30 p-2 rounded-lg mr-4">
-                            <FileText className="h-6 w-6 text-pitchburg-purple" />
+              
+              <TabsContent value="submit-pitch" className="animate-fade-in">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Submit Your Pitch</CardTitle>
+                    <CardDescription>
+                      Share your innovative idea with us for review and potential showcase
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-4 md:col-span-2">
+                        <div>
+                          <Label htmlFor="pitch-title">Pitch Title</Label>
+                          <Input id="pitch-title" placeholder="Enter the title of your pitch" />
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <Label htmlFor="category">Category</Label>
+                            <select 
+                              id="category" 
+                              className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pitchburg-purple focus:border-transparent"
+                            >
+                              <option value="" disabled selected>Select a category</option>
+                              <option value="innovation">Innovation</option>
+                              <option value="social">Social Impact</option>
+                              <option value="technology">Technology</option>
+                              <option value="environment">Environmental</option>
+                              <option value="business">Business</option>
+                            </select>
                           </div>
                           <div>
-                            <h3 className="font-medium">{document.title}</h3>
-                            <div className="flex items-center gap-3 text-xs text-gray-500 mt-1">
-                              <span>{document.type}</span>
-                              <span>{document.size}</span>
-                              <span>Updated: {document.date}</span>
-                            </div>
+                            <Label htmlFor="team-members">Team Size</Label>
+                            <select 
+                              id="team-members" 
+                              className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pitchburg-purple focus:border-transparent"
+                            >
+                              <option value="" disabled selected>Number of team members</option>
+                              <option value="1">Individual (Just me)</option>
+                              <option value="2-3">Small team (2-3)</option>
+                              <option value="4-6">Medium team (4-6)</option>
+                              <option value="7+">Large team (7+)</option>
+                            </select>
                           </div>
                         </div>
-                        <Button size="sm" variant="outline" className="flex items-center gap-2">
-                          <Download className="h-4 w-4" />
-                          Download
-                        </Button>
-                      </motion.div>
-                    ))}
-                  </motion.div>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" className="w-full">
-                    Request Additional Documents
-                  </Button>
-                </CardFooter>
-              </Card>
-            </TabsContent>
-
-            {/* Certificates Tab */}
-            <TabsContent value="certificates" className="animate-fade-in">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Your Certificates & Awards</CardTitle>
-                  <CardDescription>
-                    Access and download certificates, awards, and recognition documents
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {resources.certificates.map((certificate) => (
-                      <div 
-                        key={certificate.id} 
-                        className="border border-gray-100 rounded-lg p-5 relative overflow-hidden card-hover"
-                      >
-                        <div className="absolute top-0 right-0 w-20 h-20 bg-pitchburg-light-purple/30 rounded-bl-[100px] -z-10"></div>
-                        <div className="flex items-start gap-4">
-                          <div className="bg-pitchburg-light-purple/30 p-2 rounded-lg">
-                            <Award className="h-6 w-6 text-pitchburg-purple" />
+                        <div>
+                          <Label htmlFor="pitch-description">Pitch Description</Label>
+                          <Textarea 
+                            id="pitch-description" 
+                            placeholder="Describe your pitch, its value proposition, and target audience"
+                            rows={6}
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="pitch-file">Upload Pitch Materials</Label>
+                          <div className="border-2 border-dashed border-gray-300 rounded-md p-6 text-center hover:border-pitchburg-purple transition-colors">
+                            <Upload className="h-10 w-10 text-gray-400 mx-auto mb-3" />
+                            <p className="text-sm text-gray-500 mb-1">
+                              Drag and drop your files here, or click to browse
+                            </p>
+                            <p className="text-xs text-gray-400">
+                              Supports PDF, PPT, images, and videos up to 50MB
+                            </p>
+                            <Input 
+                              id="pitch-file" 
+                              type="file" 
+                              className="hidden" 
+                              multiple 
+                            />
+                            <Button 
+                              variant="outline" 
+                              className="mt-4"
+                              onClick={() => document.getElementById('pitch-file')?.click()}
+                            >
+                              Browse Files
+                            </Button>
                           </div>
-                          <div className="flex-grow">
-                            <h3 className="font-medium mb-2">{certificate.title}</h3>
-                            <p className="text-sm text-gray-500 mb-2">Issued: {certificate.date}</p>
-                            <div className="flex items-center justify-between">
-                              <Badge 
-                                className={certificate.status === "Available" 
-                                  ? "bg-green-500" 
-                                  : "bg-amber-500"
-                                }
-                              >
-                                {certificate.status}
-                              </Badge>
-                              <Button 
-                                size="sm" 
-                                variant="outline" 
-                                className="flex items-center gap-2" 
-                                disabled={certificate.status !== "Available"}
-                              >
-                                <Download className="h-4 w-4" />
-                                Download
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                  <CardFooter className="flex justify-end">
+                    <Button variant="outline" className="mr-2">Save Draft</Button>
+                    <Button className="bg-pitchburg-purple hover:bg-purple-600">Submit Pitch</Button>
+                  </CardFooter>
+                </Card>
+              </TabsContent>
+              
+              <TabsContent value="resources" className="animate-fade-in">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Resources & Documents</CardTitle>
+                    <CardDescription>
+                      Access official documents, certificates, and helpful resources
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      <Card className="border shadow-sm">
+                        <CardHeader className="pb-3">
+                          <CardTitle className="flex items-center gap-2">
+                            <FileText className="h-5 w-5 text-pitchburg-purple" />
+                            Official Documents
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                          <div className="flex justify-between items-center p-3 bg-gray-50 rounded-md hover:bg-gray-100">
+                            <span className="text-sm">Pitch Guidelines</span>
+                            <Button variant="ghost" size="sm">
+                              <Download className="h-4 w-4 mr-1" /> Download
+                            </Button>
+                          </div>
+                          <div className="flex justify-between items-center p-3 bg-gray-50 rounded-md hover:bg-gray-100">
+                            <span className="text-sm">Registration Form</span>
+                            <Button variant="ghost" size="sm">
+                              <Download className="h-4 w-4 mr-1" /> Download
+                            </Button>
+                          </div>
+                          <div className="flex justify-between items-center p-3 bg-gray-50 rounded-md hover:bg-gray-100">
+                            <span className="text-sm">Consent Form</span>
+                            <Button variant="ghost" size="sm">
+                              <Download className="h-4 w-4 mr-1" /> Download
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                      
+                      <Card className="border shadow-sm">
+                        <CardHeader className="pb-3">
+                          <CardTitle className="flex items-center gap-2">
+                            <Award className="h-5 w-5 text-pitchburg-purple" />
+                            Certificates & Awards
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="space-y-4">
+                            <div className="p-4 bg-gray-50 rounded-md">
+                              <h4 className="font-medium mb-2">Access Your Certificates</h4>
+                              <p className="text-sm text-gray-500 mb-3">
+                                Login to download your participation and achievement certificates
+                              </p>
+                              <Button className="w-full bg-pitchburg-purple hover:bg-purple-600">
+                                Sign In to Access
+                              </Button>
+                            </div>
+                            <div className="p-4 border border-dashed rounded-md">
+                              <h4 className="font-medium mb-1">Recently Added</h4>
+                              <p className="text-sm text-gray-500">
+                                Innovation Summit 2025 Participation Certificates now available
+                              </p>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                      
+                      <Card className="border shadow-sm">
+                        <CardHeader className="pb-3">
+                          <CardTitle className="flex items-center gap-2">
+                            <PenLine className="h-5 w-5 text-pitchburg-purple" />
+                            Submit Query
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="space-y-3">
+                            <div>
+                              <Label htmlFor="query-subject">Subject</Label>
+                              <Input id="query-subject" placeholder="Subject of your query" />
+                            </div>
+                            <div>
+                              <Label htmlFor="query-message">Message</Label>
+                              <Textarea id="query-message" placeholder="Your question or request" rows={3} />
+                            </div>
+                            <Button className="w-full bg-pitchburg-purple hover:bg-purple-600">
+                              <MessageSquare className="h-4 w-4 mr-2" /> Submit Query
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              
+              <TabsContent value="connect" className="animate-fade-in">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Connect & Partner</CardTitle>
+                    <CardDescription>
+                      Explore opportunities for collaboration, sponsorship and partnership
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                      <div className="lg:col-span-2">
+                        <div className="space-y-6">
+                          <div className="p-6 bg-gradient-to-br from-pitchburg-purple/10 to-pitchburg-light-purple/30 rounded-lg">
+                            <h3 className="text-xl font-bold mb-3">Join Our Network</h3>
+                            <p className="text-gray-700 mb-4">
+                              We welcome collaborations with schools, colleges, organizations, and industry partners 
+                              who share our vision of fostering innovation among young minds.
+                            </p>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div className="flex gap-3 p-4 bg-white/80 rounded-md">
+                                <Building className="h-10 w-10 text-pitchburg-purple flex-shrink-0" />
+                                <div>
+                                  <h4 className="font-medium mb-1">Educational Institutions</h4>
+                                  <p className="text-sm text-gray-600">Partner with us to bring Pitchburg to your campus</p>
+                                </div>
+                              </div>
+                              <div className="flex gap-3 p-4 bg-white/80 rounded-md">
+                                <Handshake className="h-10 w-10 text-pitchburg-purple flex-shrink-0" />
+                                <div>
+                                  <h4 className="font-medium mb-1">Corporate Partners</h4>
+                                  <p className="text-sm text-gray-600">Sponsor events or mentor young innovators</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-4">
+                              <h3 className="text-lg font-medium">Partnership Inquiry</h3>
+                              <div>
+                                <Label htmlFor="org-name">Organization Name</Label>
+                                <Input id="org-name" placeholder="Your organization name" />
+                              </div>
+                              <div>
+                                <Label htmlFor="org-type">Organization Type</Label>
+                                <select 
+                                  id="org-type" 
+                                  className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pitchburg-purple focus:border-transparent"
+                                >
+                                  <option value="" disabled selected>Select organization type</option>
+                                  <option value="school">School</option>
+                                  <option value="college">College/University</option>
+                                  <option value="company">Corporate/Company</option>
+                                  <option value="ngo">Non-profit/NGO</option>
+                                  <option value="government">Government Agency</option>
+                                  <option value="other">Other</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div className="space-y-4">
+                              <h3 className="text-lg font-medium">Contact Information</h3>
+                              <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                  <Label htmlFor="contact-name">Contact Name</Label>
+                                  <Input id="contact-name" placeholder="Your name" />
+                                </div>
+                                <div>
+                                  <Label htmlFor="contact-role">Your Role</Label>
+                                  <Input id="contact-role" placeholder="Your position" />
+                                </div>
+                              </div>
+                              <div>
+                                <Label htmlFor="contact-email">Email</Label>
+                                <Input id="contact-email" type="email" placeholder="Your email" />
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div className="space-y-4">
+                            <div>
+                              <Label htmlFor="partnership-interest">Partnership Interest</Label>
+                              <Textarea 
+                                id="partnership-interest"
+                                placeholder="Tell us about your interest in partnering with Pitchburg"
+                                rows={4}
+                              />
+                            </div>
+                            <div className="flex justify-end">
+                              <Button className="bg-pitchburg-purple hover:bg-purple-600">
+                                Submit Partnership Inquiry
                               </Button>
                             </div>
                           </div>
                         </div>
                       </div>
-                    ))}
-
-                    <div className="border border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center h-[180px]">
-                      <p className="text-sm font-medium mb-2">Missing a certificate?</p>
-                      <p className="text-xs text-gray-500 text-center mb-4">
-                        If you're expecting a certificate that's not listed here, send us a request
-                      </p>
-                      <Button size="sm">Request Certificate</Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            {/* Connect Tab */}
-            <TabsContent value="connect" className="animate-fade-in">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Connect & Collaborate</CardTitle>
-                  <CardDescription>
-                    Connect with our network of partners, schools, and organizations
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="mb-8">
-                    <h3 className="font-medium mb-4">Available Connections</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {resources.connections.map((connection) => (
-                        <div 
-                          key={connection.id} 
-                          className="border border-gray-100 rounded-lg p-5 transition-all hover:shadow-md"
-                        >
-                          <div className="flex items-start gap-4">
-                            <div className="bg-pitchburg-light-purple/30 p-2 rounded-lg">
-                              <Users className="h-6 w-6 text-pitchburg-purple" />
+                      
+                      <div>
+                        <Card>
+                          <CardHeader>
+                            <CardTitle className="text-lg">Connect With Us</CardTitle>
+                          </CardHeader>
+                          <CardContent className="space-y-6">
+                            <div>
+                              <h4 className="font-medium mb-3 flex items-center gap-2">
+                                <Mail className="h-4 w-4 text-pitchburg-purple" />
+                                Email Us
+                              </h4>
+                              <p className="text-sm">
+                                <a 
+                                  href="mailto:partnerships@pitchburg.edu" 
+                                  className="text-pitchburg-purple hover:underline"
+                                >
+                                  partnerships@pitchburg.edu
+                                </a>
+                              </p>
                             </div>
-                            <div className="flex-grow">
-                              <h3 className="font-medium">{connection.name}</h3>
-                              <Badge variant="outline" className="mb-2 mt-1">{connection.type}</Badge>
-                              <p className="text-sm text-gray-500 mb-3">{connection.status}</p>
-                              <Button size="sm" className="bg-pitchburg-purple hover:bg-purple-600 w-full">
-                                Connect
+                            
+                            <div>
+                              <h4 className="font-medium mb-3 flex items-center gap-2">
+                                <Users className="h-4 w-4 text-pitchburg-purple" />
+                                Meet Our Team
+                              </h4>
+                              <p className="text-sm text-gray-600 mb-3">
+                                Schedule a virtual or in-person meeting with our partnerships team
+                              </p>
+                              <Button variant="outline" className="w-full">
+                                Book a Meeting
                               </Button>
                             </div>
-                          </div>
-                        </div>
-                      ))}
+                            
+                            <div className="p-4 bg-gray-50 rounded-md">
+                              <h4 className="font-medium mb-2">Current Partners</h4>
+                              <p className="text-sm text-gray-600 mb-4">
+                                Join these organizations that are already part of our network
+                              </p>
+                              <div className="flex flex-wrap gap-2">
+                                <div className="bg-gray-200 h-8 w-16 animate-pulse rounded-md"></div>
+                                <div className="bg-gray-200 h-8 w-24 animate-pulse rounded-md"></div>
+                                <div className="bg-gray-200 h-8 w-20 animate-pulse rounded-md"></div>
+                                <div className="bg-gray-200 h-8 w-16 animate-pulse rounded-md"></div>
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </div>
                     </div>
-                  </div>
-
-                  <div className="bg-gray-50 rounded-lg p-6">
-                    <h3 className="font-medium mb-4">Become a Partner</h3>
-                    <p className="text-sm text-gray-600 mb-4">
-                      Interested in partnering with Pitchburg? Fill out our partnership inquiry form to get started.
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                      <Input placeholder="Organization Name" />
-                      <Input placeholder="Contact Email" />
-                    </div>
-                    <div className="flex items-center justify-between mt-4">
-                      <Link className="h-4 w-4 mr-2 text-pitchburg-purple" />
-                      <span className="text-sm text-pitchburg-purple hover:underline">View partnership benefits</span>
-                      <Button className="ml-auto bg-pitchburg-purple hover:bg-purple-600">
-                        Submit Inquiry
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-                <CardFooter className="flex flex-col sm:flex-row items-center gap-4">
-                  <div className="flex items-center gap-2">
-                    <Mail className="h-4 w-4 text-pitchburg-purple" />
-                    <span className="text-sm">partnerships@pitchburg.edu</span>
-                  </div>
-                  <Button variant="outline" size="sm" className="sm:ml-auto">
-                    Contact Support
-                  </Button>
-                </CardFooter>
-              </Card>
-            </TabsContent>
-          </Tabs>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          </motion.div>
         </div>
       </main>
       <Footer />

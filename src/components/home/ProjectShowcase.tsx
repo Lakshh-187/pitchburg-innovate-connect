@@ -65,9 +65,8 @@ export function ProjectShowcase() {
         <div className="relative px-4 md:px-10">
           <Carousel 
             className="w-full max-w-5xl mx-auto" 
-            onSelect={(api) => {
-              const selectedIndex = api?.selectedScrollSnap() ?? 0;
-              setActiveIndex(selectedIndex);
+            onSelect={(index) => {
+              setActiveIndex(index);
             }}
           >
             <CarouselContent>

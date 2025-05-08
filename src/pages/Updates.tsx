@@ -1,6 +1,7 @@
 
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { InstituteHero } from "@/components/layout/InstituteHero";
 import { Button } from "@/components/ui/button";
 import { 
   Card, 
@@ -52,6 +53,14 @@ const Updates = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-grow">
+        <InstituteHero 
+          instituteName="Institute Pitchburg"
+          tagline="Latest News and Announcements"
+          description="Stay informed about events, announcements, and opportunities from our innovation ecosystem."
+          pageTitle="Updates"
+          backgroundImage="public/lovable-uploads/f857c92c-a7ff-404a-923e-2877e32530e0.png"
+        />
+        
         <div className="container mx-auto px-4 py-12">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
