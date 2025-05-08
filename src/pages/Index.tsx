@@ -7,6 +7,9 @@ import { PitchCategories } from "@/components/home/PitchCategories";
 import { AchieverSpotlight } from "@/components/home/AchieverSpotlight";
 import { UpdatesFeed } from "@/components/home/UpdatesFeed";
 import { StatsSection } from "@/components/home/StatsSection";
+import { EventsCalendar } from "@/components/home/EventsCalendar";
+import { ProjectShowcase } from "@/components/home/ProjectShowcase";
+import { PartnersSection } from "@/components/home/PartnersSection";
 
 const Index = () => {
   return (
@@ -16,8 +19,11 @@ const Index = () => {
         <HeroSection />
         <FeaturedPitch />
         <PitchCategories />
+        <EventsCalendar />
         <StatsSection />
+        <ProjectShowcase />
         <AchieverSpotlight />
+        <PartnersSection />
         <UpdatesFeed />
       </main>
       <Footer />

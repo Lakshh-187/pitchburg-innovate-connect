@@ -9,6 +9,7 @@ import Gallery from "./pages/Gallery";
 import Updates from "./pages/Updates";
 import Achievers from "./pages/Achievers";
 import About from "./pages/About";
+import SubmitResources from "./pages/SubmitResources";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/updates" element={<Updates />} />
           <Route path="/achievers" element={<Achievers />} />
           <Route path="/about" element={<About />} />
+          <Route path="/submit-resources" element={<SubmitResources />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
