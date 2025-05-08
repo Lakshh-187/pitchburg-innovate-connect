@@ -65,7 +65,7 @@ export function ProjectShowcase() {
         <div className="relative px-4 md:px-10">
           <Carousel 
             className="w-full max-w-5xl mx-auto" 
-            onSelect={(index) => {
+            onSelect={(index: number) => {
               setActiveIndex(index);
             }}
           >
