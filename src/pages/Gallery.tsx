@@ -66,11 +66,15 @@ const Gallery = () => {
       <Navbar />
       <main className="flex-grow">
         <InstituteHero 
-          instituteName="Institute Pitchburg"
-          tagline="Showcasing Innovation Excellence"
+          category="Digital Showcase"
+          title="Innovation Gallery" 
+          subtitle="Showcasing Excellence"
           description="Explore our collection of student pitch videos, presentations, and images from across campus initiatives."
-          pageTitle="Pitch Gallery"
-          backgroundImage="public/lovable-uploads/f857c92c-a7ff-404a-923e-2877e32530e0.png"
+          primaryActionText="Submit Your Pitch"
+          secondaryActionText="Filter Gallery"
+          primaryActionHref="/submit-resources"
+          secondaryActionHref="#gallery-filters"
+          backgroundImage="public/lovable-uploads/1565516b-b8da-43dc-aa93-05f53b659f74.png"
         />
         
         <div className="container mx-auto px-4 py-12">

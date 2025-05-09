@@ -22,11 +22,14 @@ const NotFound = () => {
       <Navbar />
       <main className="flex-grow">
         <InstituteHero 
-          instituteName="Institute Pitchburg"
-          tagline="Page Not Found"
+          category="Error 404"
+          title="Page Not Found" 
+          subtitle="We've Lost This Page"
           description="The page you are looking for might have been removed, had its name changed, or is temporarily unavailable."
           primaryActionText="Return to Home"
+          secondaryActionText={null}
           primaryActionHref="/"
+          backgroundImage="public/lovable-uploads/1565516b-b8da-43dc-aa93-05f53b659f74.png"
         />
         
         <div className="text-center max-w-lg mx-auto px-6 py-12">

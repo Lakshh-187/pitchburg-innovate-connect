@@ -17,12 +17,15 @@ const Index = () => {
       <Navbar />
       <main className="flex-grow">
         <InstituteHero 
-          instituteName="Institute Pitchburg Hub"
-          tagline="Where Young Innovators Shape Tomorrow"
+          category="Innovation Hub"
+          title="Empowering Innovators" 
+          subtitle="For Tomorrow's World"
           description="Join our vibrant community of student innovators showcasing groundbreaking ideas, social initiatives, and transformative projects."
           primaryActionText="Explore Pitches"
           secondaryActionText="Learn More"
-          backgroundImage="public/lovable-uploads/f857c92c-a7ff-404a-923e-2877e32530e0.png"
+          primaryActionHref="/gallery"
+          secondaryActionHref="/about"
+          backgroundImage="public/lovable-uploads/1565516b-b8da-43dc-aa93-05f53b659f74.png"
         />
         <FeaturedPitch />
         <PitchCategories />

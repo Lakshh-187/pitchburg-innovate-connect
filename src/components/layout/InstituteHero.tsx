@@ -1,84 +1,92 @@
 
 import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 
 interface InstituteHeroProps {
-  instituteName: string;
-  tagline: string;
-  description: string;
+  category?: string;
+  title?: string;
+  subtitle?: string;
+  description?: string;
   primaryActionText?: string;
   secondaryActionText?: string;
   primaryActionHref?: string;
   secondaryActionHref?: string;
-  pageTitle?: string;
   backgroundImage?: string;
+  alignment?: "left" | "center";
 }
 
 export function InstituteHero({
-  instituteName = "Institute Pitchburg Hub",
-  tagline = "Where Young Innovators Shape Tomorrow",
-  description = "Join our vibrant community of student innovators showcasing groundbreaking ideas, social initiatives, and transformative projects.",
-  primaryActionText,
-  secondaryActionText,
+  category = "Non-profit Organization",
+  title = "Empowering Scholars",
+  subtitle = "For Tomorrow's World",
+  description = "A complete ecosystem where scholars learn, perform, and connect with opportunities through the Talent Hunt Alliance.",
+  primaryActionText = "Apply for ID Card",
+  secondaryActionText = "Explore Programs",
   primaryActionHref = "#",
   secondaryActionHref = "#",
-  pageTitle,
-  backgroundImage,
+  backgroundImage = "public/lovable-uploads/1565516b-b8da-43dc-aa93-05f53b659f74.png",
+  alignment = "left",
 }: InstituteHeroProps) {
   return (
-    <div className="relative bg-gradient-to-br from-pitchburg-light-purple via-white to-white overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute -top-10 -left-10 w-40 h-40 bg-pitchburg-yellow rounded-full opacity-50 blur-2xl"></div>
-      <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-pitchburg-orange rounded-full opacity-50 blur-2xl"></div>
+    <div className="relative overflow-hidden bg-gray-900 text-white">
+      {/* Background image with overlay */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src={backgroundImage} 
+          alt="Background"
+          className="w-full h-full object-cover opacity-70"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent"></div>
+      </div>
       
-      <div className="container mx-auto px-4 py-12 md:py-16 lg:py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-          <div className="space-y-6 animate-fade-in">
-            <div className="inline-block px-4 py-2 bg-pitchburg-purple bg-opacity-10 rounded-full">
-              <span className="text-pitchburg-purple font-medium text-sm">
-                {pageTitle ? pageTitle : "Welcome to " + instituteName}
-              </span>
-            </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display leading-tight">
-              <span className="text-pitchburg-dark-purple">{instituteName.split(" ")[0]}</span>{" "}
-              <span className="text-pitchburg-purple">{instituteName.split(" ").slice(1).join(" ")}</span>
-            </h1>
-            <h2 className="text-2xl md:text-3xl font-medium text-gray-800">
-              {tagline}
-            </h2>
-            <p className="text-lg text-gray-600 max-w-lg">
-              {description}
-            </p>
-            
-            {(primaryActionText || secondaryActionText) && (
-              <div className="flex flex-wrap gap-4">
-                {primaryActionText && (
-                  <Button 
-                    asChild
-                    className="bg-pitchburg-purple hover:bg-purple-600 text-white px-6 py-2 h-12"
-                  >
-                    <a href={primaryActionHref}>{primaryActionText}</a>
-                  </Button>
-                )}
-                {secondaryActionText && (
-                  <Button 
-                    asChild
-                    variant="outline" 
-                    className="border-pitchburg-purple text-pitchburg-purple hover:bg-pitchburg-light-purple h-12"
-                  >
-                    <a href={secondaryActionHref}>{secondaryActionText}</a>
-                  </Button>
-                )}
-              </div>
+      <div className="container mx-auto px-4 py-16 md:py-24 relative z-10">
+        <div className="max-w-3xl">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm mb-6">
+            <span className="text-white/90 text-sm font-medium">
+              {category}
+            </span>
+          </div>
+          
+          <h1 className={`text-5xl md:text-6xl font-bold leading-tight ${alignment === 'center' ? 'text-center mx-auto' : ''}`}>
+            <span className="block">{title}</span> 
+            <span className="block text-pitchburg-purple">{subtitle}</span>
+          </h1>
+          
+          <p className={`text-xl text-white/80 mt-6 max-w-2xl ${alignment === 'center' ? 'text-center mx-auto' : ''}`}>
+            {description}
+          </p>
+          
+          <div className={`mt-10 flex flex-wrap gap-4 ${alignment === 'center' ? 'justify-center' : ''}`}>
+            {primaryActionText && (
+              <Button 
+                asChild
+                className="bg-pitchburg-purple hover:bg-purple-600 text-white px-6 py-6 h-12 text-base"
+              >
+                <a href={primaryActionHref}>
+                  {primaryActionText}
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+            )}
+            {secondaryActionText && (
+              <Button 
+                asChild
+                variant="outline" 
+                className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 px-6 py-6 h-12 text-base"
+              >
+                <a href={secondaryActionHref}>{secondaryActionText}</a>
+              </Button>
             )}
           </div>
           
-          <div className="relative ml-auto animate-fade-in">
-            <div className="relative rounded-xl overflow-hidden shadow-xl">
-              <img 
-                src={backgroundImage || "public/lovable-uploads/f857c92c-a7ff-404a-923e-2877e32530e0.png"} 
-                alt={instituteName} 
-                className="w-full h-auto object-cover"
-              />
+          <div className="mt-16">
+            <p className="text-sm text-white/60 mb-4">Trusted by leading institutions and organizations</p>
+            <div className="flex flex-wrap gap-8">
+              {[1, 2, 3, 4].map((index) => (
+                <div key={index} className="bg-white/10 backdrop-blur-sm h-12 w-24 rounded flex items-center justify-center">
+                  <div className="bg-white/40 h-6 w-16 rounded"></div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

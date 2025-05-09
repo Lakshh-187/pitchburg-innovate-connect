@@ -1,4 +1,3 @@
-
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { InstituteHero } from "@/components/layout/InstituteHero";
@@ -32,11 +31,15 @@ const About = () => {
       <Navbar />
       <main className="flex-grow">
         <InstituteHero 
-          instituteName="Institute Pitchburg"
-          tagline="Our Mission and Vision"
-          description="Learn about our journey, our team, and how we support student innovation across campuses."
-          pageTitle="About Pitchburg"
-          backgroundImage="public/lovable-uploads/f857c92c-a7ff-404a-923e-2877e32530e0.png"
+          category="Our Story"
+          title="About Institute Pitchburg" 
+          subtitle="Our Vision & Mission"
+          description="Learn about our journey, values, and the impact we're creating through innovative education and student-led initiatives."
+          primaryActionText="Meet Our Team"
+          secondaryActionText="Contact Us"
+          primaryActionHref="#team"
+          secondaryActionHref="#contact"
+          backgroundImage="public/lovable-uploads/1565516b-b8da-43dc-aa93-05f53b659f74.png"
         />
         
         <div className="container mx-auto px-4 py-12">

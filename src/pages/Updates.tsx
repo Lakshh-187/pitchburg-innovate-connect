@@ -1,4 +1,3 @@
-
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { InstituteHero } from "@/components/layout/InstituteHero";
@@ -54,11 +53,15 @@ const Updates = () => {
       <Navbar />
       <main className="flex-grow">
         <InstituteHero 
-          instituteName="Institute Pitchburg"
-          tagline="Latest News and Announcements"
-          description="Stay informed about events, announcements, and opportunities from our innovation ecosystem."
-          pageTitle="Updates"
-          backgroundImage="public/lovable-uploads/f857c92c-a7ff-404a-923e-2877e32530e0.png"
+          category="News & Announcements"
+          title="Latest Updates" 
+          subtitle="Stay Informed"
+          description="Keep up with the latest news, events, achievements, and opportunities from our growing innovation ecosystem."
+          primaryActionText="Subscribe to Updates"
+          secondaryActionText="View Calendar"
+          primaryActionHref="#subscribe"
+          secondaryActionHref="#calendar"
+          backgroundImage="public/lovable-uploads/1565516b-b8da-43dc-aa93-05f53b659f74.png"
         />
         
         <div className="container mx-auto px-4 py-12">

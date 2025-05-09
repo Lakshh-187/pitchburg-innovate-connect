@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -43,10 +42,15 @@ const SubmitResources = () => {
       <Navbar />
       <main className="flex-grow">
         <InstituteHero 
-          instituteName="Pitchburg Innovation Hub"
-          tagline="Submit, Connect, and Grow with Us"
-          description="Access resources, submit your pitch, and connect with our innovation ecosystem all in one place."
-          pageTitle="Submit & Resources"
+          category="Content Submission"
+          title="Submit Your Resources" 
+          subtitle="Share Your Innovation"
+          description="Showcase your projects, pitches, and creative ideas with our community and get recognized for your innovation."
+          primaryActionText="Start Submission"
+          secondaryActionText="View Guidelines"
+          primaryActionHref="#submission-form"
+          secondaryActionHref="#guidelines"
+          backgroundImage="public/lovable-uploads/1565516b-b8da-43dc-aa93-05f53b659f74.png"
         />
         
         <div className="container mx-auto px-4 py-12">

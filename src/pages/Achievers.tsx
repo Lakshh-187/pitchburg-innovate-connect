@@ -1,6 +1,6 @@
-
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { InstituteHero } from "@/components/layout/InstituteHero";
 import { Button } from "@/components/ui/button";
 import { 
   Card, 
@@ -63,6 +63,18 @@ const Achievers = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-grow">
+        <InstituteHero 
+          category="Exceptional Talent"
+          title="Our Achievers" 
+          subtitle="Making Global Impact"
+          description="Meet the remarkable students who have excelled through our platform and are now creating waves of change worldwide."
+          primaryActionText="View All Achievers"
+          secondaryActionText="Nominate Someone"
+          primaryActionHref="#achievers-list"
+          secondaryActionHref="#nominate"
+          backgroundImage="public/lovable-uploads/1565516b-b8da-43dc-aa93-05f53b659f74.png"
+        />
+        
         <div className="container mx-auto px-4 py-12">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
