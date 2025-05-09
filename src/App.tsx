@@ -11,6 +11,7 @@ import Achievers from "./pages/Achievers";
 import About from "./pages/About";
 import SubmitResources from "./pages/SubmitResources";
 import NotFound from "./pages/NotFound";
+import CB78 from "./pages/CB78";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/achievers" element={<Achievers />} />
           <Route path="/about" element={<About />} />
           <Route path="/submit-resources" element={<SubmitResources />} />
+          <Route path="/cb-78" element={<CB78 />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

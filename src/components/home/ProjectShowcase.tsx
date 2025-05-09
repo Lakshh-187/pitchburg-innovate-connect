@@ -66,8 +66,11 @@ export function ProjectShowcase() {
           <Carousel 
             className="w-full max-w-5xl mx-auto" 
             onSelect={(api) => {
-              const currentIndex = api.selectedScrollSnap();
-              setActiveIndex(currentIndex);
+              // Fix: Properly access the selected index from the Embla Carousel API
+              if (api && api.selectedScrollSnap) {
+                const currentIndex = api.selectedScrollSnap();
+                setActiveIndex(currentIndex);
+              }
             }}
           >
             <CarouselContent>
