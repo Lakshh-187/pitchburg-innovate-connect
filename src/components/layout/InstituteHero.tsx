@@ -24,7 +24,7 @@ export function InstituteHero({
   secondaryActionText = "Explore Programs",
   primaryActionHref = "#",
   secondaryActionHref = "#",
-  backgroundImage = "public/lovable-uploads/1565516b-b8da-43dc-aa93-05f53b659f74.png",
+  backgroundImage = "public/lovable-uploads/bbfd50d9-c69d-40de-90ba-c2ca76c49314.png",
   alignment = "left",
 }: InstituteHeroProps) {
   return (
@@ -34,22 +34,22 @@ export function InstituteHero({
         <img 
           src={backgroundImage} 
           alt="Background"
-          className="w-full h-full object-cover opacity-70"
+          className="w-full h-full object-cover opacity-80"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent"></div>
       </div>
       
       <div className="container mx-auto px-4 py-16 md:py-24 relative z-10">
         <div className="max-w-3xl">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm mb-6">
-            <span className="text-white/90 text-sm font-medium">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-black/30 backdrop-blur-sm mb-6">
+            <span className="text-white text-sm font-medium">
               {category}
             </span>
           </div>
           
           <h1 className={`text-5xl md:text-6xl font-bold leading-tight ${alignment === 'center' ? 'text-center mx-auto' : ''}`}>
-            <span className="block">{title}</span> 
-            <span className="block text-pitchburg-purple">{subtitle}</span>
+            <span className="block">{title} </span> 
+            <span className="block text-purple-500">{subtitle}</span>
           </h1>
           
           <p className={`text-xl text-white/80 mt-6 max-w-2xl ${alignment === 'center' ? 'text-center mx-auto' : ''}`}>
@@ -60,7 +60,7 @@ export function InstituteHero({
             {primaryActionText && (
               <Button 
                 asChild
-                className="bg-pitchburg-purple hover:bg-purple-600 text-white px-6 py-6 h-12 text-base"
+                className="bg-purple-500 hover:bg-purple-600 text-white px-6 py-6 h-12 text-base rounded-full"
               >
                 <a href={primaryActionHref}>
                   {primaryActionText}
@@ -72,7 +72,7 @@ export function InstituteHero({
               <Button 
                 asChild
                 variant="outline" 
-                className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 px-6 py-6 h-12 text-base"
+                className="bg-transparent border-white text-white hover:bg-white/20 px-6 py-6 h-12 text-base rounded-full"
               >
                 <a href={secondaryActionHref}>{secondaryActionText}</a>
               </Button>

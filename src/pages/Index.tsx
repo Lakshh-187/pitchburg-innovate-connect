@@ -17,15 +17,15 @@ const Index = () => {
       <Navbar />
       <main className="flex-grow">
         <InstituteHero 
-          category="Innovation Hub"
-          title="Empowering Innovators" 
+          category="Non-profit Organization"
+          title="Empowering Scholars" 
           subtitle="For Tomorrow's World"
-          description="Join our vibrant community of student innovators showcasing groundbreaking ideas, social initiatives, and transformative projects."
-          primaryActionText="Explore Pitches"
-          secondaryActionText="Learn More"
+          description="A complete ecosystem where scholars learn, perform, and connect with opportunities through the Talent Hunt Alliance."
+          primaryActionText="Apply for ID Card"
+          secondaryActionText="Explore Programs"
           primaryActionHref="/gallery"
           secondaryActionHref="/about"
-          backgroundImage="public/lovable-uploads/1565516b-b8da-43dc-aa93-05f53b659f74.png"
+          backgroundImage="public/lovable-uploads/bbfd50d9-c69d-40de-90ba-c2ca76c49314.png"
         />
         <FeaturedPitch />
         <PitchCategories />

@@ -1,3 +1,4 @@
+
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { InstituteHero } from "@/components/layout/InstituteHero";
@@ -21,7 +22,7 @@ const CB78 = () => {
           secondaryActionText="Explore Curriculum"
           primaryActionHref="#"
           secondaryActionHref="#curriculum"
-          backgroundImage="public/lovable-uploads/1565516b-b8da-43dc-aa93-05f53b659f74.png"
+          backgroundImage="public/lovable-uploads/bbfd50d9-c69d-40de-90ba-c2ca76c49314.png"
         />
         
         {/* Core Pillars Section */}

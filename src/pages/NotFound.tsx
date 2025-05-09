@@ -29,12 +29,12 @@ const NotFound = () => {
           primaryActionText="Return to Home"
           secondaryActionText={null}
           primaryActionHref="/"
-          backgroundImage="public/lovable-uploads/1565516b-b8da-43dc-aa93-05f53b659f74.png"
+          backgroundImage="public/lovable-uploads/bbfd50d9-c69d-40de-90ba-c2ca76c49314.png"
         />
         
         <div className="text-center max-w-lg mx-auto px-6 py-12">
-          <div className="text-8xl font-bold text-pitchburg-purple mb-6">404</div>
-          <Button asChild className="bg-pitchburg-purple hover:bg-purple-600">
+          <div className="text-8xl font-bold text-purple-500 mb-6">404</div>
+          <Button asChild className="bg-purple-500 hover:bg-purple-600">
             <Link to="/">Return to Home</Link>
           </Button>
         </div>
