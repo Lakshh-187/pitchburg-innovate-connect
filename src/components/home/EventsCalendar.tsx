@@ -128,54 +128,56 @@ export function EventsCalendar() {
                 </div>
               </CardHeader>
               <CardContent>
-                <TabsContent value="upcoming" className="mt-0 animate-fade-in">
-                  <div className="space-y-5">
-                    {events.upcoming.map((event) => (
-                      <div key={event.id} className="border border-gray-100 rounded-lg p-4 transition-all hover:shadow-md hover:border-pitchburg-purple/30 group">
-                        <div className="flex items-center gap-3">
-                          <div className="p-3 rounded-lg bg-gray-50 group-hover:bg-pitchburg-light-purple/20">
-                            {getCategoryIcon(event.category)}
-                          </div>
-                          <div className="flex-grow">
-                            <div className="flex justify-between items-start">
-                              <h3 className="font-medium">{event.title}</h3>
-                              <Badge className="bg-pitchburg-purple">{event.category}</Badge>
+                <Tabs value={view}>
+                  <TabsContent value="upcoming" className="mt-0 animate-fade-in">
+                    <div className="space-y-5">
+                      {events.upcoming.map((event) => (
+                        <div key={event.id} className="border border-gray-100 rounded-lg p-4 transition-all hover:shadow-md hover:border-pitchburg-purple/30 group">
+                          <div className="flex items-center gap-3">
+                            <div className="p-3 rounded-lg bg-gray-50 group-hover:bg-pitchburg-light-purple/20">
+                              {getCategoryIcon(event.category)}
                             </div>
-                            <div className="flex items-center text-sm text-gray-500 mt-1">
-                              <CalendarClock className="h-3.5 w-3.5 mr-1" />
-                              <span>{event.date}</span>
+                            <div className="flex-grow">
+                              <div className="flex justify-between items-start">
+                                <h3 className="font-medium">{event.title}</h3>
+                                <Badge className="bg-pitchburg-purple">{event.category}</Badge>
+                              </div>
+                              <div className="flex items-center text-sm text-gray-500 mt-1">
+                                <CalendarClock className="h-3.5 w-3.5 mr-1" />
+                                <span>{event.date}</span>
+                              </div>
+                              <p className="text-xs text-gray-500 mt-1">{event.participants}</p>
                             </div>
-                            <p className="text-xs text-gray-500 mt-1">{event.participants}</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </TabsContent>
-                <TabsContent value="past" className="mt-0 animate-fade-in">
-                  <div className="space-y-5">
-                    {events.past.map((event) => (
-                      <div key={event.id} className="border border-gray-100 rounded-lg p-4 transition-all hover:shadow-md hover:border-pitchburg-purple/30 group">
-                        <div className="flex items-center gap-3">
-                          <div className="p-3 rounded-lg bg-gray-50 group-hover:bg-pitchburg-light-purple/20">
-                            {getCategoryIcon(event.category)}
-                          </div>
-                          <div className="flex-grow">
-                            <div className="flex justify-between items-start">
-                              <h3 className="font-medium">{event.title}</h3>
-                              <Badge variant="outline">{event.category}</Badge>
-                            </div>
-                            <div className="flex items-center text-sm text-gray-500 mt-1">
-                              <CalendarClock className="h-3.5 w-3.5 mr-1" />
-                              <span>{event.date}</span>
-                            </div>
-                            <p className="text-xs text-gray-500 mt-1">{event.participants}</p>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                </TabsContent>
+                      ))}
+                    </div>
+                  </TabsContent>
+                  <TabsContent value="past" className="mt-0 animate-fade-in">
+                    <div className="space-y-5">
+                      {events.past.map((event) => (
+                        <div key={event.id} className="border border-gray-100 rounded-lg p-4 transition-all hover:shadow-md hover:border-pitchburg-purple/30 group">
+                          <div className="flex items-center gap-3">
+                            <div className="p-3 rounded-lg bg-gray-50 group-hover:bg-pitchburg-light-purple/20">
+                              {getCategoryIcon(event.category)}
+                            </div>
+                            <div className="flex-grow">
+                              <div className="flex justify-between items-start">
+                                <h3 className="font-medium">{event.title}</h3>
+                                <Badge variant="outline">{event.category}</Badge>
+                              </div>
+                              <div className="flex items-center text-sm text-gray-500 mt-1">
+                                <CalendarClock className="h-3.5 w-3.5 mr-1" />
+                                <span>{event.date}</span>
+                              </div>
+                              <p className="text-xs text-gray-500 mt-1">{event.participants}</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </TabsContent>
+                </Tabs>
               </CardContent>
               <CardFooter>
                 <Button className="w-full bg-pitchburg-purple hover:bg-purple-600">
