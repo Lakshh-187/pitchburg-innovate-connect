@@ -6,7 +6,8 @@ import {
   CarouselContent,
   CarouselItem,
   CarouselNext,
-  CarouselPrevious
+  CarouselPrevious,
+  type CarouselApi
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -14,6 +15,7 @@ import { Button } from "@/components/ui/button";
 
 export function ProjectShowcase() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [api, setApi] = useState<CarouselApi>();
   
   // Mock data for showcase projects
   const showcaseProjects = [
@@ -51,6 +53,23 @@ export function ProjectShowcase() {
     }
   ];
 
+  // Update the active index when the carousel changes
+  const handleCarouselChange = () => {
+    if (!api) return;
+    setActiveIndex(api.selectedScrollSnap());
+  };
+
+  // Set up the carousel api and add event listeners
+  const setupCarousel = (carouselApi: CarouselApi) => {
+    setApi(carouselApi);
+    
+    // Add event listeners when the carousel is created
+    carouselApi.on("select", handleCarouselChange);
+    
+    // Initial update of the active index
+    handleCarouselChange();
+  };
+
   return (
     <section className="py-16 bg-gradient-to-b from-white to-gray-50">
       <div className="container mx-auto px-4">
@@ -64,14 +83,8 @@ export function ProjectShowcase() {
 
         <div className="relative px-4 md:px-10">
           <Carousel 
-            className="w-full max-w-5xl mx-auto" 
-            onSelect={(api) => {
-              // Fix: Properly access the selected index from the Embla Carousel API
-              if (api && api.selectedScrollSnap) {
-                const currentIndex = api.selectedScrollSnap();
-                setActiveIndex(currentIndex);
-              }
-            }}
+            className="w-full max-w-5xl mx-auto"
+            setApi={setupCarousel}
           >
             <CarouselContent>
               {showcaseProjects.map((project, index) => (
