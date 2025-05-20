@@ -29,6 +29,7 @@ export function Footer() {
           <div>
             <h4 className="font-semibold mb-4 text-lg">Resources</h4>
             <ul className="space-y-2 text-gray-300">
+              <li><Link to="/leadership-plan" className="hover:text-pitchburg-purple transition">Leadership & Execution Plan</Link></li>
               <li><Link to="#" className="hover:text-pitchburg-purple transition">Pitch Guidelines</Link></li>
               <li><Link to="#" className="hover:text-pitchburg-purple transition">Code of Conduct</Link></li>
               <li><Link to="#" className="hover:text-pitchburg-purple transition">FAQ</Link></li>
