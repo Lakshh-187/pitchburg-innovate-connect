@@ -12,7 +12,9 @@ interface InstituteHeroProps {
   primaryActionHref?: string;
   secondaryActionHref?: string;
   backgroundImage?: string;
+  heroImage?: string;
   alignment?: "left" | "center";
+  backgroundColor?: string;
 }
 
 export function InstituteHero({
@@ -24,71 +26,94 @@ export function InstituteHero({
   secondaryActionText = "Explore Programs",
   primaryActionHref = "#",
   secondaryActionHref = "#",
-  backgroundImage = "public/lovable-uploads/bbfd50d9-c69d-40de-90ba-c2ca76c49314.png",
+  backgroundImage,
+  heroImage,
   alignment = "left",
+  backgroundColor = "bg-gradient-to-r from-purple-900 to-purple-800",
 }: InstituteHeroProps) {
   return (
-    <div className="relative overflow-hidden bg-gray-900 text-white">
+    <div className={`relative overflow-hidden ${backgroundColor} text-white`}>
       {/* Background image with overlay */}
-      <div className="absolute inset-0 z-0">
-        <img 
-          src={backgroundImage} 
-          alt="Background"
-          className="w-full h-full object-cover opacity-80"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent"></div>
-      </div>
+      {backgroundImage && (
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={backgroundImage} 
+            alt="Background"
+            className="w-full h-full object-cover opacity-40"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/50 to-transparent"></div>
+        </div>
+      )}
       
-      <div className="container mx-auto px-4 py-16 md:py-24 relative z-10">
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-black/30 backdrop-blur-sm mb-6">
-            <span className="text-white text-sm font-medium">
-              {category}
-            </span>
-          </div>
-          
-          <h1 className={`text-5xl md:text-6xl font-bold leading-tight ${alignment === 'center' ? 'text-center mx-auto' : ''}`}>
-            <span className="block">{title} </span> 
-            <span className="block text-purple-500">{subtitle}</span>
-          </h1>
-          
-          <p className={`text-xl text-white/80 mt-6 max-w-2xl ${alignment === 'center' ? 'text-center mx-auto' : ''}`}>
-            {description}
-          </p>
-          
-          <div className={`mt-10 flex flex-wrap gap-4 ${alignment === 'center' ? 'justify-center' : ''}`}>
-            {primaryActionText && (
-              <Button 
-                asChild
-                className="bg-purple-500 hover:bg-purple-600 text-white px-6 py-6 h-12 text-base rounded-full"
-              >
-                <a href={primaryActionHref}>
-                  {primaryActionText}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
-              </Button>
-            )}
-            {secondaryActionText && (
-              <Button 
-                asChild
-                variant="outline" 
-                className="bg-transparent border-white text-white hover:bg-white/20 px-6 py-6 h-12 text-base rounded-full"
-              >
-                <a href={secondaryActionHref}>{secondaryActionText}</a>
-              </Button>
-            )}
-          </div>
-          
-          <div className="mt-16">
-            <p className="text-sm text-white/60 mb-4">Trusted by leading institutions and organizations</p>
-            <div className="flex flex-wrap gap-8">
-              {[1, 2, 3, 4].map((index) => (
-                <div key={index} className="bg-white/10 backdrop-blur-sm h-12 w-24 rounded flex items-center justify-center">
-                  <div className="bg-white/40 h-6 w-16 rounded"></div>
-                </div>
-              ))}
+      <div className="container mx-auto px-4 py-16 md:py-20 lg:py-24 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm mb-6">
+              <span className="text-white text-sm font-medium">
+                {category}
+              </span>
             </div>
+            
+            <h1 className={`text-5xl md:text-6xl font-bold leading-tight ${alignment === 'center' ? 'text-center mx-auto' : ''}`}>
+              <span className="block">{title} </span> 
+              <span className="block">
+                {subtitle} <span className="text-yellow-300">{subtitle.includes("Through") ? "" : "CSR Grants"}</span>
+              </span>
+            </h1>
+            
+            <p className={`text-xl text-white/80 mt-6 max-w-2xl ${alignment === 'center' ? 'text-center mx-auto' : ''}`}>
+              {description}
+            </p>
+            
+            <div className={`mt-10 flex flex-wrap gap-4 ${alignment === 'center' ? 'justify-center' : ''}`}>
+              {primaryActionText && (
+                <Button 
+                  asChild
+                  className="bg-white hover:bg-white/90 text-purple-900 font-medium px-8 py-6 h-12 text-base rounded-full"
+                >
+                  <a href={primaryActionHref}>
+                    {primaryActionText}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
+              )}
+              {secondaryActionText && (
+                <Button 
+                  asChild
+                  variant="outline" 
+                  className="bg-transparent border-white text-white hover:bg-white/20 px-8 py-6 h-12 text-base rounded-full"
+                >
+                  <a href={secondaryActionHref}>{secondaryActionText}</a>
+                </Button>
+              )}
+            </div>
+            
+            {!heroImage && (
+              <div className="mt-16">
+                <p className="text-sm text-white/60 mb-4">Trusted by leading institutions and organizations</p>
+                <div className="flex flex-wrap gap-8">
+                  {[1, 2, 3, 4].map((index) => (
+                    <div key={index} className="bg-white/10 backdrop-blur-sm h-12 w-24 rounded flex items-center justify-center">
+                      <div className="bg-white/40 h-6 w-16 rounded"></div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
+          
+          {/* Hero Image - Right Side */}
+          {heroImage && (
+            <div className="relative hidden lg:block">
+              <div className="rounded-2xl overflow-hidden bg-white/10 backdrop-blur-sm p-2">
+                <img 
+                  src={heroImage} 
+                  alt="Hero"
+                  className="rounded-xl w-full h-auto"
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

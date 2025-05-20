@@ -17,15 +17,16 @@ const Index = () => {
       <Navbar />
       <main className="flex-grow">
         <InstituteHero 
-          category="Non-profit Organization"
-          title="Empowering Scholars" 
-          subtitle="For Tomorrow's World"
-          description="A complete ecosystem where scholars learn, perform, and connect with opportunities through the Talent Hunt Alliance."
-          primaryActionText="Apply for ID Card"
-          secondaryActionText="Explore Programs"
+          category="TRANSFORMING EDUCATION"
+          title="Transforming Students &" 
+          subtitle="Institutes Through"
+          description="Building a future where quality education is accessible to all through alumni donations, modern AI platforms, and zero-fee opportunities."
+          primaryActionText="Apply Now"
+          secondaryActionText="Learn More"
           primaryActionHref="/gallery"
           secondaryActionHref="/about"
-          backgroundImage="public/lovable-uploads/bbfd50d9-c69d-40de-90ba-c2ca76c49314.png"
+          backgroundColor="bg-gradient-to-r from-purple-900 to-purple-800"
+          heroImage="https://i.ibb.co/Lzm5hQPn/a-professional-photo-of-a-young-woman-wearing-a-un-MYMPk0-FYS9u-Ryz-X-ksf-Di-Q-rz2-Fq-R4s-Qgm-Tdu5-H.jpg"
         />
         <FeaturedPitch />
         <PitchCategories />
