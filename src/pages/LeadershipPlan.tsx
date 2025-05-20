@@ -37,6 +37,9 @@ const LeadershipPlan = () => {
           primaryActionHref="#key-units"
           secondaryActionHref="#execution-strategy"
           backgroundImage="public/lovable-uploads/bbfd50d9-c69d-40de-90ba-c2ca76c49314.png"
+          heroImage="https://i.ibb.co/Lzm5hQPn/a-professional-photo-of-a-young-woman-wearing-a-un-MYMPk0-FYS9u-Ryz-X-ksf-Di-Q-rz2-Fq-R4s-Qgm-Tdu5-H.jpg"
+          alignment="left"
+          backgroundColor="bg-gradient-to-r from-purple-900 to-indigo-800"
         />
 
         {/* Key Units Section */}
