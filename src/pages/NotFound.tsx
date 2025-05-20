@@ -30,6 +30,7 @@ const NotFound = () => {
           secondaryActionText={null}
           primaryActionHref="/"
           backgroundImage="public/lovable-uploads/bbfd50d9-c69d-40de-90ba-c2ca76c49314.png"
+          heroImage="https://i.ibb.co/Lzm5hQPn/a-professional-photo-of-a-young-woman-wearing-a-un-MYMPk0-FYS9u-Ryz-X-ksf-Di-Q-rz2-Fq-R4s-Qgm-Tdu5-H.jpg"
         />
         
         <div className="text-center max-w-lg mx-auto px-6 py-12">

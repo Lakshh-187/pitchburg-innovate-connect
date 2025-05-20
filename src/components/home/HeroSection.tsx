@@ -33,8 +33,8 @@ export function HeroSection() {
             <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-pitchburg-orange rounded-full opacity-50 blur-2xl"></div>
             <div className="relative rounded-xl overflow-hidden shadow-xl">
               <img 
-                src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81" 
-                alt="Students presenting a project" 
+                src="https://i.ibb.co/Lzm5hQPn/a-professional-photo-of-a-young-woman-wearing-a-un-MYMPk0-FYS9u-Ryz-X-ksf-Di-Q-rz2-Fq-R4s-Qgm-Tdu5-H.jpg" 
+                alt="Young professional woman" 
                 className="w-full h-auto object-cover"
               />
             </div>

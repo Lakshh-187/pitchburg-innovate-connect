@@ -75,6 +75,7 @@ const Gallery = () => {
           primaryActionHref="/submit-resources"
           secondaryActionHref="#gallery-filters"
           backgroundImage="public/lovable-uploads/1565516b-b8da-43dc-aa93-05f53b659f74.png"
+          heroImage="https://i.ibb.co/Lzm5hQPn/a-professional-photo-of-a-young-woman-wearing-a-un-MYMPk0-FYS9u-Ryz-X-ksf-Di-Q-rz2-Fq-R4s-Qgm-Tdu5-H.jpg"
         />
         
         <div className="container mx-auto px-4 py-12">
