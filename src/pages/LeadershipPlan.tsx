@@ -29,7 +29,7 @@ const LeadershipPlan = () => {
       <main className="flex-grow">
         <InstituteHero
           category="Foundation"
-          title="Leadership & Execution Plan"
+          title=""
           subtitle="Empowering Youth, Transforming Institutions"
           description="Our mission is to empower youth and transform institutions to international standards through impactful leadership, campaigns, and a grants-based model that benefits both our team and society."
           primaryActionText="Join Our Mission"
@@ -39,7 +39,7 @@ const LeadershipPlan = () => {
           backgroundImage="public/lovable-uploads/bbfd50d9-c69d-40de-90ba-c2ca76c49314.png"
           heroImage="https://i.ibb.co/Lzm5hQPn/a-professional-photo-of-a-young-woman-wearing-a-un-MYMPk0-FYS9u-Ryz-X-ksf-Di-Q-rz2-Fq-R4s-Qgm-Tdu5-H.jpg"
           alignment="left"
-          backgroundColor="bg-gradient-to-r from-purple-900 to-indigo-800"
+          backgroundColor="bg-gradient-to-r from-purple-700 to-white"
         />
 
         {/* Key Units Section */}
