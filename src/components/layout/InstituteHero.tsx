@@ -15,13 +15,15 @@ interface InstituteHeroProps {
   heroImage?: string;
   alignment?: "left" | "center";
   backgroundColor?: string;
+  gradientClass?: string;
 }
 
 export function InstituteHero({
   category = "Non-profit Organization",
   title = "Empowering Scholars",
   subtitle = "For Tomorrow's World",
-  description = "A complete ecosystem where scholars learn, perform, and connect with opportunities through the Talent Hunt Alliance.",
+  description =
+    "A complete ecosystem where scholars learn, perform, and connect with opportunities through the Talent Hunt Alliance.",
   primaryActionText = "Apply for ID Card",
   secondaryActionText = "Explore Programs",
   primaryActionHref = "#",
@@ -29,17 +31,20 @@ export function InstituteHero({
   backgroundImage,
   heroImage,
   alignment = "left",
-  backgroundColor = "bg-gradient-to-r from-purple-900 to-purple-800",
+  backgroundColor,
+  gradientClass = "bg-gradient-to-r from-purple-900 to-purple-800",
 }: InstituteHeroProps) {
   return (
-    <div className={`relative overflow-hidden ${backgroundColor} text-white`}>
+    <div
+      className={`relative overflow-hidden ${backgroundColor || gradientClass} text-white`}
+    >
       {/* Background image with overlay */}
       {backgroundImage && (
         <div className="absolute inset-0 z-0">
-          <img 
-            src={backgroundImage} 
+          <img
+            src={backgroundImage}
             alt="Background"
-            className="w-full h-full object-cover opacity-40"
+            className="h-full w-full object-cover opacity-40"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/50 to-transparent"></div>
         </div>
@@ -49,26 +54,36 @@ export function InstituteHero({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <div className="max-w-3xl">
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm mb-6">
-              <span className="text-white text-sm font-medium">
-                {category}
-              </span>
+              <span className="text-sm font-medium text-white">{category}</span>
             </div>
-            
-            <h1 className={`text-5xl md:text-6xl font-bold leading-tight ${alignment === 'center' ? 'text-center mx-auto' : ''}`}>
-              <span className="block">{title} </span> 
+
+            <h1
+              className={`text-5xl md:text-6xl font-bold leading-tight ${
+                alignment === "center" ? "text-center mx-auto" : ""
+              }`}
+            >
+              <span className="block">{title} </span>
               <span className="block">
-                {subtitle} <span className="text-yellow-300">{subtitle.includes("Through") ? "" : "CSR Grants"}</span>
+                {subtitle}{" "}
+                <span className="text-yellow-300">
+                  {subtitle.includes("Through") ? "" : "CSR Grants"}
+                </span>
               </span>
             </h1>
-            
-            <p className={`text-xl text-white/80 mt-6 max-w-2xl ${alignment === 'center' ? 'text-center mx-auto' : ''}`}>
+
+            <p
+              className={`text-xl text-white/80 mt-6 max-w-2xl ${
+                alignment === "center" ? "text-center mx-auto" : ""
+              }`}
+            >
               {description}
             </p>
-            
-            <div className={`mt-10 flex flex-wrap gap-4 ${alignment === 'center' ? 'justify-center' : ''}`}>
+
+            <div
+              className={`mt-10 flex flex-wrap gap-4 ${alignment === "center" ? "justify-center" : ""}`}
+            >
               {primaryActionText && (
-                <Button 
-                  asChild
+                <Button
                   className="bg-white hover:bg-white/90 text-purple-900 font-medium px-8 py-6 h-12 text-base rounded-full"
                 >
                   <a href={primaryActionHref}>
@@ -78,9 +93,8 @@ export function InstituteHero({
                 </Button>
               )}
               {secondaryActionText && (
-                <Button 
+                <Button
                   asChild
-                  variant="outline" 
                   className="bg-transparent border-white text-white hover:bg-white/20 px-8 py-6 h-12 text-base rounded-full"
                 >
                   <a href={secondaryActionHref}>{secondaryActionText}</a>
@@ -92,7 +106,10 @@ export function InstituteHero({
               <div className="mt-16">
                 <p className="text-sm text-white/60 mb-4">Trusted by leading institutions and organizations</p>
                 <div className="flex flex-wrap gap-8">
-                  {[1, 2, 3, 4].map((index) => (
+                  {[1, 2, 3, 4].map(
+                    (
+                      index // Replace with actual logos later
+                    ) => (
                     <div key={index} className="bg-white/10 backdrop-blur-sm h-12 w-24 rounded flex items-center justify-center">
                       <div className="bg-white/40 h-6 w-16 rounded"></div>
                     </div>
@@ -100,12 +117,12 @@ export function InstituteHero({
                 </div>
               </div>
             )}
-          </div>
-          
+          </div>{" "}
+
           {/* Hero Image - Right Side */}
           {heroImage && (
             <div className="relative hidden lg:block">
-              <div className="rounded-2xl overflow-hidden bg-white/10 backdrop-blur-sm p-2">
+              <div className="overflow-hidden rounded-2xl bg-white/10 backdrop-blur-sm p-2">
                 <img 
                   src={heroImage} 
                   alt="Hero"
