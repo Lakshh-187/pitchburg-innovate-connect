@@ -23,6 +23,7 @@ export function Footer() {
               <li><Link to="/updates" className="hover:text-pitchburg-purple transition">Updates</Link></li>
               <li><Link to="/achievers" className="hover:text-pitchburg-purple transition">Achievers</Link></li>
               <li><Link to="/about" className="hover:text-pitchburg-purple transition">About</Link></li>
+              <li><Link to="/careers" className="hover:text-pitchburg-purple transition">Careers</Link></li>
             </ul>
           </div>
           

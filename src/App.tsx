@@ -13,6 +13,7 @@ import SubmitResources from "./pages/SubmitResources";
 import NotFound from "./pages/NotFound";
 import CB78 from "./pages/CB78";
 import LeadershipPlan from "./pages/LeadershipPlan";
+import Careers from "./pages/Careers";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/submit-resources" element={<SubmitResources />} />
           <Route path="/cb-78" element={<CB78 />} />
           <Route path="/leadership-plan" element={<LeadershipPlan />} />
+          <Route path="/careers" element={<Careers />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
