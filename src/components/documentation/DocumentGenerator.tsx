@@ -1,18 +1,17 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Download, FileText, Award, CreditCard, Mail, Certificate } from "lucide-react";
+import { Download, FileText, Award, CreditCard, Mail } from "lucide-react";
 
 const documentTypes = [
   { id: "offer-letter", name: "Offer Letter", icon: Mail, color: "bg-green-100 text-green-600" },
   { id: "invitation-letter", name: "Invitation Letter", icon: FileText, color: "bg-blue-100 text-blue-600" },
   { id: "id-card", name: "ID Card", icon: CreditCard, color: "bg-purple-100 text-purple-600" },
   { id: "badge", name: "Digital Badge", icon: Award, color: "bg-orange-100 text-orange-600" },
-  { id: "certificate", name: "Certificate", icon: Certificate, color: "bg-red-100 text-red-600" }
+  { id: "certificate", name: "Certificate", icon: FileText, color: "bg-red-100 text-red-600" }
 ];
 
 const categories = [
