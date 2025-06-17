@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -5,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Download, FileText, Award, CreditCard, Mail } from "lucide-react";
+import { DocumentViewer } from "./DocumentViewer";
 
 const documentTypes = [
   { id: "offer-letter", name: "Offer Letter", icon: Mail, color: "bg-green-100 text-green-600" },
@@ -31,10 +33,15 @@ export function DocumentGenerator() {
     documentType: ""
   });
 
+  const [showDocument, setShowDocument] = useState(false);
+
   const handleGenerate = () => {
-    // Here you would implement the actual document generation logic
     console.log("Generating document with data:", formData);
-    alert(`Generating ${formData.documentType} for ${formData.studentName}`);
+    setShowDocument(true);
+  };
+
+  const handleCloseDocument = () => {
+    setShowDocument(false);
   };
 
   return (
@@ -125,6 +132,16 @@ export function DocumentGenerator() {
           </Card>
         ))}
       </div>
+
+      {showDocument && (
+        <DocumentViewer
+          documentType={formData.documentType}
+          studentName={formData.studentName}
+          instituteName={formData.instituteName}
+          category={formData.category}
+          onClose={handleCloseDocument}
+        />
+      )}
     </div>
   );
 }
