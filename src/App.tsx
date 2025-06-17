@@ -15,6 +15,10 @@ import CB78 from "./pages/CB78";
 import LeadershipPlan from "./pages/LeadershipPlan";
 import Careers from "./pages/Careers";
 import UNCIF from "./pages/UNCIF";
+import Documentation from "./pages/Documentation";
+import WeizmannPortal from "./pages/WeizmannPortal";
+import Store from "./pages/Store";
+import AdminPanel from "./pages/AdminPanel";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +39,10 @@ const App = () => (
           <Route path="/leadership-plan" element={<LeadershipPlan />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/uncif" element={<UNCIF />} />
+          <Route path="/documentation" element={<Documentation />} />
+          <Route path="/weizmann-portal" element={<WeizmannPortal />} />
+          <Route path="/store" element={<Store />} />
+          <Route path="/admin" element={<AdminPanel />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

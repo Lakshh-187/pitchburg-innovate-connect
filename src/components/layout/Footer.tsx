@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer className="bg-pitchburg-dark-purple text-white py-12">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <h3 className="text-xl font-bold font-display text-pitchburg-purple">
               Pitch<span className="text-white">burg</span>
@@ -24,18 +24,28 @@ export function Footer() {
               <li><Link to="/achievers" className="hover:text-pitchburg-purple transition">Achievers</Link></li>
               <li><Link to="/about" className="hover:text-pitchburg-purple transition">About</Link></li>
               <li><Link to="/careers" className="hover:text-pitchburg-purple transition">Careers</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold mb-4 text-lg">Programs</h4>
+            <ul className="space-y-2 text-gray-300">
               <li><Link to="/uncif" className="hover:text-pitchburg-purple transition">UNCIF Curriculum</Link></li>
+              <li><Link to="/weizmann-portal" className="hover:text-pitchburg-purple transition">Weizmann Portal</Link></li>
+              <li><Link to="/store" className="hover:text-pitchburg-purple transition">Student Store</Link></li>
+              <li><Link to="/documentation" className="hover:text-pitchburg-purple transition">Documentation</Link></li>
+              <li><Link to="/leadership-plan" className="hover:text-pitchburg-purple transition">Leadership Plan</Link></li>
             </ul>
           </div>
           
           <div>
             <h4 className="font-semibold mb-4 text-lg">Resources</h4>
             <ul className="space-y-2 text-gray-300">
-              <li><Link to="/leadership-plan" className="hover:text-pitchburg-purple transition">Leadership & Execution Plan</Link></li>
               <li><Link to="#" className="hover:text-pitchburg-purple transition">Pitch Guidelines</Link></li>
               <li><Link to="#" className="hover:text-pitchburg-purple transition">Code of Conduct</Link></li>
               <li><Link to="#" className="hover:text-pitchburg-purple transition">FAQ</Link></li>
               <li><Link to="#" className="hover:text-pitchburg-purple transition">Contact Support</Link></li>
+              <li><Link to="/admin" className="hover:text-pitchburg-purple transition text-xs opacity-60">Admin</Link></li>
             </ul>
           </div>
         </div>
