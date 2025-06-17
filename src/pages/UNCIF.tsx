@@ -13,9 +13,7 @@ import { FrontlinerDevelopment } from "@/components/uncif/FrontlinerDevelopment"
 import { ParticipationStrategy } from "@/components/uncif/ParticipationStrategy";
 import { PhysicalInfrastructure } from "@/components/uncif/PhysicalInfrastructure";
 import { AssessmentRevolution } from "@/components/uncif/AssessmentRevolution";
-import { ImplementationRoadmap } from "@/components/uncif/ImplementationRoadmap";
 import { SuccessStories } from "@/components/uncif/SuccessStories";
-import { TransformationTimeline } from "@/components/uncif/TransformationTimeline";
 import { CallToAction } from "@/components/uncif/CallToAction";
 
 export default function UNCIF() {
@@ -42,9 +40,7 @@ export default function UNCIF() {
       <AssessmentRevolution />
       <CurriculumPillars />
       <TransformationModel />
-      <ImplementationRoadmap />
       <SuccessStories />
-      <TransformationTimeline />
       <ImpactShowcase />
       <CallToAction />
       <Footer />
