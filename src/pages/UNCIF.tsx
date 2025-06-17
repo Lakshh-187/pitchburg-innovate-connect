@@ -6,6 +6,17 @@ import { UNCIFOverview } from "@/components/uncif/UNCIFOverview";
 import { CurriculumPillars } from "@/components/uncif/CurriculumPillars";
 import { TransformationModel } from "@/components/uncif/TransformationModel";
 import { ImpactShowcase } from "@/components/uncif/ImpactShowcase";
+import { WeizmannShowcase } from "@/components/uncif/WeizmannShowcase";
+import { TechInfrastructure } from "@/components/uncif/TechInfrastructure";
+import { EstablishmentGuide } from "@/components/uncif/EstablishmentGuide";
+import { FrontlinerDevelopment } from "@/components/uncif/FrontlinerDevelopment";
+import { ParticipationStrategy } from "@/components/uncif/ParticipationStrategy";
+import { PhysicalInfrastructure } from "@/components/uncif/PhysicalInfrastructure";
+import { AssessmentRevolution } from "@/components/uncif/AssessmentRevolution";
+import { ImplementationRoadmap } from "@/components/uncif/ImplementationRoadmap";
+import { SuccessStories } from "@/components/uncif/SuccessStories";
+import { TransformationTimeline } from "@/components/uncif/TransformationTimeline";
+import { CallToAction } from "@/components/uncif/CallToAction";
 
 export default function UNCIF() {
   return (
@@ -22,9 +33,20 @@ export default function UNCIF() {
         heroImage="https://i.ibb.co/Lzm5hQPn/a-professional-photo-of-a-young-woman-wearing-a-un-MYMPk0-FYS9u-Ryz-X-ksf-Di-Q-rz2-Fq-R4s-Qgm-Tdu5-H.jpg"
       />
       <UNCIFOverview />
+      <WeizmannShowcase />
+      <TechInfrastructure />
+      <EstablishmentGuide />
+      <FrontlinerDevelopment />
+      <ParticipationStrategy />
+      <PhysicalInfrastructure />
+      <AssessmentRevolution />
       <CurriculumPillars />
       <TransformationModel />
+      <ImplementationRoadmap />
+      <SuccessStories />
+      <TransformationTimeline />
       <ImpactShowcase />
+      <CallToAction />
       <Footer />
     </div>
   );
