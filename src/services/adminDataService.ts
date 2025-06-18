@@ -1,6 +1,6 @@
 
 // Store Products Data
-export const storeData = [
+const defaultStoreData = [
   { id: 1, name: "Digital Art Collection", creator: "Sarah Johnson", price: "$25", category: "Art", status: "Active", description: "Beautiful digital artwork collection", imageUrl: "/api/placeholder/200/200" },
   { id: 2, name: "Smart IoT Device", creator: "Alex Chen", price: "$120", category: "Technology", status: "Active", description: "Advanced IoT device for smart homes", imageUrl: "/api/placeholder/200/200" },
   { id: 3, name: "Web Development Skills", creator: "Maya Patel", price: "$45/hr", category: "Skills", status: "Active", description: "Professional web development tutoring", imageUrl: "/api/placeholder/200/200" },
@@ -12,7 +12,7 @@ export const storeData = [
 ];
 
 // Weizmann Portal Data
-export const weizmannData = [
+const defaultWeizmannData = [
   { id: 1, name: "MIT Innovation Challenge", organization: "MIT", deadline: "2025-07-15", category: "Competition", status: "Open", description: "Global innovation competition for students", eligibility: "Undergraduate students", prize: "$50,000" },
   { id: 2, name: "Stanford AI Scholarship", organization: "Stanford University", deadline: "2025-08-20", category: "Scholarship", status: "Open", description: "Full scholarship for AI research", eligibility: "Graduate students", prize: "Full tuition + stipend" },
   { id: 3, name: "Global Tech Summit", organization: "TechCorp", deadline: "2025-09-10", category: "Conference", status: "Open", description: "Premier technology conference", eligibility: "All students", prize: "Networking opportunity" },
@@ -22,7 +22,7 @@ export const weizmannData = [
 ];
 
 // Gallery Data
-export const galleryData = [
+const defaultGalleryData = [
   { id: 1, name: "Smart Campus Navigation", student: "John Doe", department: "Computer Science", status: "Featured", description: "AI-powered campus navigation system", imageUrl: "/api/placeholder/300/200", tags: "AI, Navigation, Mobile" },
   { id: 2, name: "Eco-Friendly Packaging", student: "Jane Smith", department: "Environmental Science", status: "Approved", description: "Biodegradable packaging solutions", imageUrl: "/api/placeholder/300/200", tags: "Environment, Sustainability" },
   { id: 3, name: "Mental Health App", student: "Mike Johnson", department: "Psychology", status: "Pending", description: "Mobile app for mental health support", imageUrl: "/api/placeholder/300/200", tags: "Health, Mobile, AI" },
@@ -32,7 +32,7 @@ export const galleryData = [
 ];
 
 // Achievers Data
-export const achieversData = [
+const defaultAchieversData = [
   { id: 1, name: "Alice Brown", achievement: "Best Innovation Award 2025", field: "Technology", year: "2025", status: "Featured", description: "Revolutionary AI research in healthcare", profileImage: "/api/placeholder/150/150", socialLinks: "linkedin.com/in/alicebrown" },
   { id: 2, name: "Bob Wilson", achievement: "Social Impact Prize", field: "Community Development", year: "2024", status: "Active", description: "Community empowerment through technology", profileImage: "/api/placeholder/150/150", socialLinks: "github.com/bobwilson" },
   { id: 3, name: "Carol Davis", achievement: "Research Excellence Award", field: "Environmental Science", year: "2025", status: "Active", description: "Breakthrough in sustainable energy", profileImage: "/api/placeholder/150/150", socialLinks: "researchgate.net/profile/carol-davis" },
@@ -41,7 +41,7 @@ export const achieversData = [
 ];
 
 // Categories Data
-export const categoriesData = [
+const defaultCategoriesData = [
   { id: 1, name: "AI Campus Assistant", author: "Tech Innovation Team", department: "Computer Science", category: "Innovations", status: "Featured", description: "Intelligent campus assistant chatbot", imageUrl: "/api/placeholder/250/200" },
   { id: 2, name: "Community Garden Project", author: "Green Living Club", department: "Environmental Studies", category: "Environmental", status: "Active", description: "Sustainable campus gardening initiative", imageUrl: "/api/placeholder/250/200" },
   { id: 3, name: "Startup Accelerator Program", author: "Business Students Union", department: "Business Administration", category: "Internship Outcomes", status: "Active", description: "Student startup incubation program", imageUrl: "/api/placeholder/250/200" },
@@ -51,7 +51,7 @@ export const categoriesData = [
 ];
 
 // Updates Data
-export const updatesData = [
+const defaultUpdatesData = [
   { id: 1, name: "Summer Research Competition Opens", type: "Opportunity", date: "2025-06-15", priority: "High", status: "Published", description: "Applications now open for summer research programs", targetAudience: "All undergraduate students" },
   { id: 2, name: "Innovation Workshop Series", type: "Event", date: "2025-07-01", priority: "Normal", status: "Draft", description: "Weekly workshops on innovation and entrepreneurship", targetAudience: "All students interested in innovation" },
   { id: 3, name: "New Academic Guidelines", type: "Announcement", date: "2025-06-10", priority: "Normal", status: "Published", description: "Updated academic policies for the new semester", targetAudience: "All students and faculty" },
@@ -60,24 +60,49 @@ export const updatesData = [
   { id: 6, name: "Campus Safety Update", type: "Announcement", date: "2025-06-20", priority: "Urgent", status: "Published", description: "Important safety protocols and updates", targetAudience: "All campus community" },
 ];
 
+// Initialize localStorage with default data if not exists
+const initializeData = () => {
+  const sections = {
+    store: defaultStoreData,
+    weizmann: defaultWeizmannData,
+    gallery: defaultGalleryData,
+    achievers: defaultAchieversData,
+    categories: defaultCategoriesData,
+    updates: defaultUpdatesData
+  };
+
+  Object.entries(sections).forEach(([key, defaultData]) => {
+    if (!localStorage.getItem(`pitchburg_${key}_data`)) {
+      localStorage.setItem(`pitchburg_${key}_data`, JSON.stringify(defaultData));
+    }
+  });
+};
+
+// Initialize data on service load
+initializeData();
+
+// Event emitter for data changes
+class DataEventEmitter extends EventTarget {
+  emit(sectionId: string) {
+    this.dispatchEvent(new CustomEvent('dataChange', { detail: { sectionId } }));
+  }
+}
+
+export const dataEventEmitter = new DataEventEmitter();
+
 // Data management functions
 export const getDataBySection = (sectionId: string) => {
-  switch (sectionId) {
-    case "store": return storeData;
-    case "weizmann": return weizmannData;
-    case "gallery": return galleryData;
-    case "achievers": return achieversData;
-    case "categories": return categoriesData;
-    case "updates": return updatesData;
-    default: return [];
-  }
+  const data = localStorage.getItem(`pitchburg_${sectionId}_data`);
+  return data ? JSON.parse(data) : [];
 };
 
 export const updateItem = (sectionId: string, itemId: number, updatedData: any) => {
   const data = getDataBySection(sectionId);
-  const index = data.findIndex(item => item.id === itemId);
+  const index = data.findIndex((item: any) => item.id === itemId);
   if (index !== -1) {
     Object.assign(data[index], updatedData);
+    localStorage.setItem(`pitchburg_${sectionId}_data`, JSON.stringify(data));
+    dataEventEmitter.emit(sectionId);
     return true;
   }
   return false;
@@ -85,9 +110,11 @@ export const updateItem = (sectionId: string, itemId: number, updatedData: any) 
 
 export const deleteItem = (sectionId: string, itemId: number) => {
   const data = getDataBySection(sectionId);
-  const index = data.findIndex(item => item.id === itemId);
+  const index = data.findIndex((item: any) => item.id === itemId);
   if (index !== -1) {
     data.splice(index, 1);
+    localStorage.setItem(`pitchburg_${sectionId}_data`, JSON.stringify(data));
+    dataEventEmitter.emit(sectionId);
     return true;
   }
   return false;
@@ -95,8 +122,28 @@ export const deleteItem = (sectionId: string, itemId: number) => {
 
 export const addItem = (sectionId: string, newItem: any) => {
   const data = getDataBySection(sectionId);
-  const newId = Math.max(...data.map(item => item.id)) + 1;
+  const newId = data.length > 0 ? Math.max(...data.map((item: any) => item.id)) + 1 : 1;
   const itemWithId = { ...newItem, id: newId };
   data.push(itemWithId);
+  localStorage.setItem(`pitchburg_${sectionId}_data`, JSON.stringify(data));
+  dataEventEmitter.emit(sectionId);
   return itemWithId;
+};
+
+// Hook for components to listen to data changes
+export const useDataSync = (sectionId: string) => {
+  const [data, setData] = useState(() => getDataBySection(sectionId));
+
+  useEffect(() => {
+    const handleDataChange = (event: any) => {
+      if (event.detail.sectionId === sectionId) {
+        setData(getDataBySection(sectionId));
+      }
+    };
+
+    dataEventEmitter.addEventListener('dataChange', handleDataChange);
+    return () => dataEventEmitter.removeEventListener('dataChange', handleDataChange);
+  }, [sectionId]);
+
+  return data;
 };
