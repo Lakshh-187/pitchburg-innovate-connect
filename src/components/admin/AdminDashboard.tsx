@@ -5,6 +5,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Textarea } from "@/components/ui/textarea";
+import { 
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { 
   Store, 
   Globe, 
@@ -14,35 +23,80 @@ import {
   Plus, 
   Edit, 
   Trash2,
-  Save,
+  Search,
+  Eye,
+  Calendar,
+  Package,
   Users
 } from "lucide-react";
 
 export function AdminDashboard() {
   const [activeSection, setActiveSection] = useState("store");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isAddMode, setIsAddMode] = useState(false);
 
   const sections = [
-    { id: "store", name: "Store Management", icon: Store, description: "Manage student products and skills" },
-    { id: "portal", name: "Weizmann Portal", icon: Globe, description: "Add/edit global opportunities" },
-    { id: "gallery", name: "Pitch Gallery", icon: Image, description: "Manage pitch submissions" },
-    { id: "achievers", name: "Achievers", icon: Trophy, description: "Update achiever profiles" },
-    { id: "home", name: "Home Page", icon: Home, description: "Edit homepage content" }
+    { 
+      id: "store", 
+      name: "Store Management", 
+      icon: Store, 
+      description: "Manage student products and skill exchange",
+      addLabel: "Add Product/Skill"
+    },
+    { 
+      id: "weizmann", 
+      name: "Weizmann Portal", 
+      icon: Globe, 
+      description: "Manage global opportunities",
+      addLabel: "Add Opportunity"
+    },
+    { 
+      id: "gallery", 
+      name: "Pitch Gallery", 
+      icon: Image, 
+      description: "Manage pitch submissions",
+      addLabel: "Add Pitch"
+    },
+    { 
+      id: "achievers", 
+      name: "Achievers", 
+      icon: Trophy, 
+      description: "Manage achiever profiles",
+      addLabel: "Add Achiever"
+    },
+    { 
+      id: "categories", 
+      name: "Pitch Categories", 
+      icon: Package, 
+      description: "Manage pitch category projects",
+      addLabel: "Add Category Project"
+    },
+    { 
+      id: "updates", 
+      name: "Updates Page", 
+      icon: Calendar, 
+      description: "Manage announcements and events",
+      addLabel: "Add Update"
+    }
   ];
 
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Admin Dashboard</h1>
-        <p className="text-xl text-gray-600">Manage all platform content and data</p>
-        <Badge className="mt-4 bg-green-600 text-white">System Administrator</Badge>
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">Admin Panel</h1>
+        <p className="text-xl text-gray-600">Complete Content Management System</p>
+        <div className="flex justify-center gap-4 mt-6">
+          <Badge className="bg-green-600 text-white px-4 py-2">System Administrator</Badge>
+          <Badge variant="outline" className="px-4 py-2">Full Access Granted</Badge>
+        </div>
       </div>
 
       <Tabs value={activeSection} onValueChange={setActiveSection} className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList className="grid w-full grid-cols-6">
           {sections.map((section) => (
             <TabsTrigger key={section.id} value={section.id} className="flex items-center gap-2">
               <section.icon className="w-4 h-4" />
-              <span className="hidden md:inline">{section.name}</span>
+              <span className="hidden lg:inline">{section.name}</span>
             </TabsTrigger>
           ))}
         </TabsList>
@@ -51,14 +105,31 @@ export function AdminDashboard() {
           <TabsContent key={section.id} value={section.id} className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <section.icon className="w-5 h-5" />
-                  {section.name}
-                </CardTitle>
-                <CardDescription>{section.description}</CardDescription>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle className="flex items-center gap-2">
+                      <section.icon className="w-5 h-5" />
+                      {section.name}
+                    </CardTitle>
+                    <CardDescription>{section.description}</CardDescription>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button 
+                      onClick={() => setIsAddMode(!isAddMode)}
+                      className="bg-purple-600 hover:bg-purple-700"
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      {section.addLabel}
+                    </Button>
+                  </div>
+                </div>
               </CardHeader>
               <CardContent>
-                <AdminSectionContent sectionId={section.id} />
+                {isAddMode ? (
+                  <AddProductForm sectionId={section.id} onCancel={() => setIsAddMode(false)} />
+                ) : (
+                  <ManageProducts sectionId={section.id} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+                )}
               </CardContent>
             </Card>
           </TabsContent>
@@ -68,191 +139,425 @@ export function AdminDashboard() {
   );
 }
 
-function AdminSectionContent({ sectionId }: { sectionId: string }) {
-  const [isEditing, setIsEditing] = useState(false);
-
-  switch (sectionId) {
-    case "store":
-      return (
-        <div className="space-y-6">
-          <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold">Store Products</h3>
-            <Button className="bg-purple-600 hover:bg-purple-700">
-              <Plus className="w-4 h-4 mr-2" />
-              Add Product
-            </Button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[1, 2, 3].map((i) => (
-              <Card key={i} className="border">
-                <CardContent className="p-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <h4 className="font-medium">Product {i}</h4>
-                    <div className="flex gap-1">
-                      <Button size="icon" variant="outline" className="h-6 w-6">
-                        <Edit className="w-3 h-3" />
-                      </Button>
-                      <Button size="icon" variant="outline" className="h-6 w-6">
-                        <Trash2 className="w-3 h-3" />
-                      </Button>
-                    </div>
-                  </div>
-                  <p className="text-sm text-gray-600">Sample product description</p>
-                  <div className="mt-2">
-                    <Badge variant="secondary">Active</Badge>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      );
-
-    case "portal":
-      return (
-        <div className="space-y-6">
-          <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold">Global Opportunities</h3>
-            <Button className="bg-blue-600 hover:bg-blue-700">
-              <Plus className="w-4 h-4 mr-2" />
-              Add Opportunity
-            </Button>
-          </div>
-          <div className="space-y-4">
-            <Input placeholder="Search opportunities..." />
-            <div className="border rounded-lg p-4">
-              <div className="flex justify-between items-center">
-                <div>
-                  <h4 className="font-medium">Global Competition 2024</h4>
-                  <p className="text-sm text-gray-600">MIT - Technology</p>
-                </div>
-                <div className="flex gap-2">
-                  <Button size="sm" variant="outline">
-                    <Edit className="w-4 h-4 mr-1" />
-                    Edit
-                  </Button>
-                  <Button size="sm" variant="outline">
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
-                </div>
+function AddProductForm({ sectionId, onCancel }: { sectionId: string; onCancel: () => void }) {
+  const getFormFields = () => {
+    switch (sectionId) {
+      case "store":
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Product/Skill Name</label>
+                <Input placeholder="Enter product or skill name..." />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Creator Name</label>
+                <Input placeholder="Student name..." />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Price</label>
+                <Input placeholder="$0.00" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Category</label>
+                <select className="w-full p-2 border rounded-md">
+                  <option>Art</option>
+                  <option>Technology</option>
+                  <option>Crafts</option>
+                  <option>Digital</option>
+                  <option>Skills</option>
+                </select>
+              </div>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Description</label>
+                <Textarea placeholder="Product description..." className="h-24" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Image URL</label>
+                <Input placeholder="https://..." />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Type</label>
+                <select className="w-full p-2 border rounded-md">
+                  <option>Product</option>
+                  <option>Skill Exchange</option>
+                </select>
               </div>
             </div>
           </div>
-        </div>
-      );
-
-    case "gallery":
-      return (
-        <div className="space-y-6">
-          <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold">Pitch Gallery</h3>
-            <Button className="bg-green-600 hover:bg-green-700">
-              <Plus className="w-4 h-4 mr-2" />
-              Add Pitch
-            </Button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {[1, 2, 3, 4].map((i) => (
-              <Card key={i} className="border">
-                <CardContent className="p-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h4 className="font-medium">Pitch Project {i}</h4>
-                      <p className="text-sm text-gray-600">by Student {i}</p>
-                    </div>
-                    <div className="flex gap-1">
-                      <Button size="icon" variant="outline" className="h-6 w-6">
-                        <Edit className="w-3 h-3" />
-                      </Button>
-                      <Button size="icon" variant="outline" className="h-6 w-6">
-                        <Trash2 className="w-3 h-3" />
-                      </Button>
-                    </div>
-                  </div>
-                  <Badge variant="secondary">Approved</Badge>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      );
-
-    case "achievers":
-      return (
-        <div className="space-y-6">
-          <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold">Achiever Profiles</h3>
-            <Button className="bg-yellow-600 hover:bg-yellow-700">
-              <Plus className="w-4 h-4 mr-2" />
-              Add Achiever
-            </Button>
-          </div>
-          <div className="space-y-4">
-            {[1, 2, 3].map((i) => (
-              <Card key={i} className="border">
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
-                      <Users className="w-6 h-6 text-gray-500" />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-medium">Achiever {i}</h4>
-                      <p className="text-sm text-gray-600">Outstanding performance in Technology</p>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button size="sm" variant="outline">
-                        <Edit className="w-4 h-4 mr-1" />
-                        Edit
-                      </Button>
-                      <Button size="sm" variant="outline">
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      );
-
-    case "home":
-      return (
-        <div className="space-y-6">
-          <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold">Homepage Content</h3>
-            <Button className="bg-indigo-600 hover:bg-indigo-700">
-              <Save className="w-4 h-4 mr-2" />
-              Save Changes
-            </Button>
-          </div>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium mb-2">Hero Section Title</label>
-              <Input placeholder="Enter hero title..." />
+        );
+      
+      case "weizmann":
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Opportunity Title</label>
+                <Input placeholder="Competition/Scholarship name..." />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Organization</label>
+                <Input placeholder="Host organization..." />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Deadline</label>
+                <Input type="date" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Category</label>
+                <select className="w-full p-2 border rounded-md">
+                  <option>Competition</option>
+                  <option>Scholarship</option>
+                  <option>Internship</option>
+                  <option>Conference</option>
+                </select>
+              </div>
             </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">Hero Section Description</label>
-              <Input placeholder="Enter hero description..." />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">Featured Content</label>
-              <div className="border rounded-lg p-4 space-y-2">
-                <div className="flex justify-between items-center">
-                  <span>Featured Pitch #1</span>
-                  <Button size="sm" variant="outline">Edit</Button>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span>Featured Achiever #1</span>
-                  <Button size="sm" variant="outline">Edit</Button>
-                </div>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Description</label>
+                <Textarea placeholder="Opportunity description..." className="h-24" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Eligibility</label>
+                <Input placeholder="Who can apply..." />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Prize/Benefits</label>
+                <Input placeholder="What participants get..." />
               </div>
             </div>
           </div>
-        </div>
-      );
+        );
 
-    default:
-      return <div>Section content not found</div>;
-  }
+      case "gallery":
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Pitch Title</label>
+                <Input placeholder="Project name..." />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Student Name</label>
+                <Input placeholder="Presenter name..." />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Department</label>
+                <Input placeholder="Academic department..." />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Status</label>
+                <select className="w-full p-2 border rounded-md">
+                  <option>Approved</option>
+                  <option>Pending Review</option>
+                  <option>Featured</option>
+                </select>
+              </div>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Description</label>
+                <Textarea placeholder="Pitch description..." className="h-24" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Image/Video URL</label>
+                <Input placeholder="Media URL..." />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Tags</label>
+                <Input placeholder="innovation, tech, social..." />
+              </div>
+            </div>
+          </div>
+        );
+
+      case "achievers":
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Achiever Name</label>
+                <Input placeholder="Full name..." />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Achievement Title</label>
+                <Input placeholder="What they achieved..." />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Field/Category</label>
+                <Input placeholder="Technology, Arts, etc..." />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Year</label>
+                <Input placeholder="2025" />
+              </div>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Achievement Description</label>
+                <Textarea placeholder="Details about the achievement..." className="h-24" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Profile Image URL</label>
+                <Input placeholder="Profile photo URL..." />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Social Links</label>
+                <Input placeholder="LinkedIn, GitHub, etc..." />
+              </div>
+            </div>
+          </div>
+        );
+
+      case "categories":
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Project Title</label>
+                <Input placeholder="Project name..." />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Author</label>
+                <Input placeholder="Student name..." />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Department</label>
+                <Input placeholder="Academic department..." />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Category</label>
+                <select className="w-full p-2 border rounded-md">
+                  <option>Innovations</option>
+                  <option>Social Projects</option>
+                  <option>Internship Outcomes</option>
+                  <option>Tech Projects</option>
+                  <option>Environmental</option>
+                </select>
+              </div>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Description</label>
+                <Textarea placeholder="Project description..." className="h-24" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Project Image URL</label>
+                <Input placeholder="Project image URL..." />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Status</label>
+                <select className="w-full p-2 border rounded-md">
+                  <option>Active</option>
+                  <option>Featured</option>
+                  <option>Completed</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        );
+
+      case "updates":
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Update Title</label>
+                <Input placeholder="Announcement/Event title..." />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Type</label>
+                <select className="w-full p-2 border rounded-md">
+                  <option>Announcement</option>
+                  <option>Event</option>
+                  <option>Opportunity</option>
+                  <option>News</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Date</label>
+                <Input type="date" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Priority</label>
+                <select className="w-full p-2 border rounded-md">
+                  <option>Normal</option>
+                  <option>High</option>
+                  <option>Urgent</option>
+                </select>
+              </div>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Description</label>
+                <Textarea placeholder="Update content..." className="h-32" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Target Audience</label>
+                <Input placeholder="All students, specific department..." />
+              </div>
+            </div>
+          </div>
+        );
+
+      default:
+        return <div>Form not configured for this section</div>;
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="border-b pb-4">
+        <h3 className="text-lg font-semibold">Add New Item</h3>
+        <p className="text-gray-600">Fill in the details below to add a new item</p>
+      </div>
+      
+      {getFormFields()}
+      
+      <div className="flex justify-end gap-4 pt-4 border-t">
+        <Button variant="outline" onClick={onCancel}>
+          Cancel
+        </Button>
+        <Button className="bg-green-600 hover:bg-green-700">
+          Save Item
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+function ManageProducts({ sectionId, searchQuery, setSearchQuery }: { 
+  sectionId: string; 
+  searchQuery: string; 
+  setSearchQuery: (query: string) => void;
+}) {
+  // Mock data for different sections
+  const getMockData = () => {
+    switch (sectionId) {
+      case "store":
+        return [
+          { id: 1, name: "Digital Art Collection", creator: "Sarah Johnson", price: "$25", category: "Art", status: "Active" },
+          { id: 2, name: "Smart IoT Device", creator: "Alex Chen", price: "$120", category: "Tech", status: "Active" },
+          { id: 3, name: "Web Development Skills", creator: "Maya Patel", price: "$45/hr", category: "Skills", status: "Active" },
+        ];
+      case "weizmann":
+        return [
+          { id: 1, name: "MIT Innovation Challenge", organization: "MIT", deadline: "2025-07-15", category: "Competition", status: "Open" },
+          { id: 2, name: "Stanford AI Scholarship", organization: "Stanford", deadline: "2025-08-20", category: "Scholarship", status: "Open" },
+          { id: 3, name: "Global Tech Summit", organization: "TechCorp", deadline: "2025-09-10", category: "Conference", status: "Open" },
+        ];
+      case "gallery":
+        return [
+          { id: 1, name: "Smart Campus Navigation", student: "John Doe", department: "CS", status: "Featured" },
+          { id: 2, name: "Eco-Friendly Packaging", student: "Jane Smith", department: "Environmental", status: "Approved" },
+          { id: 3, name: "Mental Health App", student: "Mike Johnson", department: "Psychology", status: "Pending" },
+        ];
+      case "achievers":
+        return [
+          { id: 1, name: "Alice Brown", achievement: "Best Innovation Award", field: "Technology", year: "2025" },
+          { id: 2, name: "Bob Wilson", achievement: "Social Impact Prize", field: "Community", year: "2024" },
+          { id: 3, name: "Carol Davis", achievement: "Research Excellence", field: "Science", year: "2025" },
+        ];
+      case "categories":
+        return [
+          { id: 1, name: "AI Campus Assistant", author: "Tech Team", category: "Innovations", status: "Featured" },
+          { id: 2, name: "Community Garden", author: "Green Club", category: "Environmental", status: "Active" },
+          { id: 3, name: "Startup Accelerator", author: "Business Students", category: "Internship", status: "Active" },
+        ];
+      case "updates":
+        return [
+          { id: 1, name: "Summer Competition Opens", type: "Opportunity", date: "2025-06-15", priority: "High" },
+          { id: 2, name: "Workshop Series", type: "Event", date: "2025-07-01", priority: "Normal" },
+          { id: 3, name: "New Guidelines", type: "Announcement", date: "2025-06-10", priority: "Normal" },
+        ];
+      default:
+        return [];
+    }
+  };
+
+  const data = getMockData();
+  const filteredData = data.filter(item => 
+    item.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  return (
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <h3 className="text-lg font-semibold">Manage Existing Items</h3>
+        <div className="flex items-center gap-4">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <Input
+              placeholder="Search items..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10 w-64"
+            />
+          </div>
+          <Badge variant="outline">{filteredData.length} items</Badge>
+        </div>
+      </div>
+
+      <div className="border rounded-lg">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Details</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filteredData.map((item) => (
+              <TableRow key={item.id}>
+                <TableCell className="font-medium">{item.name}</TableCell>
+                <TableCell>
+                  <div className="text-sm text-gray-600">
+                    {sectionId === "store" && `${item.creator} • ${item.category}`}
+                    {sectionId === "weizmann" && `${item.organization} • ${item.deadline}`}
+                    {sectionId === "gallery" && `${item.student} • ${item.department}`}
+                    {sectionId === "achievers" && `${item.field} • ${item.year}`}
+                    {sectionId === "categories" && `${item.author} • ${item.category}`}
+                    {sectionId === "updates" && `${item.type} • ${item.date}`}
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <Badge 
+                    className={
+                      item.status === "Active" || item.status === "Open" || item.status === "Featured" 
+                        ? "bg-green-100 text-green-800" 
+                        : item.status === "Pending" 
+                        ? "bg-yellow-100 text-yellow-800"
+                        : "bg-blue-100 text-blue-800"
+                    }
+                  >
+                    {item.status}
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <div className="flex items-center gap-2">
+                    <Button size="sm" variant="outline">
+                      <Eye className="w-4 h-4 mr-1" />
+                      View
+                    </Button>
+                    <Button size="sm" variant="outline">
+                      <Edit className="w-4 h-4 mr-1" />
+                      Edit
+                    </Button>
+                    <Button size="sm" variant="outline" className="text-red-600 hover:text-red-700">
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  );
 }
