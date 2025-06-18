@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -38,45 +37,39 @@ export function AdminDashboard() {
   const sections = [
     { 
       id: "store", 
-      name: "Store Management", 
+      name: "Store", 
       icon: Store, 
-      description: "Manage student products and skill exchange",
-      addLabel: "Add Product/Skill"
+      description: "Manage student products and skill exchange"
     },
     { 
       id: "weizmann", 
       name: "Weizmann Portal", 
       icon: Globe, 
-      description: "Manage global opportunities",
-      addLabel: "Add Opportunity"
+      description: "Manage global opportunities"
     },
     { 
       id: "gallery", 
       name: "Pitch Gallery", 
       icon: Image, 
-      description: "Manage pitch submissions",
-      addLabel: "Add Pitch"
+      description: "Manage pitch submissions"
     },
     { 
       id: "achievers", 
       name: "Achievers", 
       icon: Trophy, 
-      description: "Manage achiever profiles",
-      addLabel: "Add Achiever"
+      description: "Manage achiever profiles"
     },
     { 
       id: "categories", 
       name: "Pitch Categories", 
       icon: Package, 
-      description: "Manage pitch category projects",
-      addLabel: "Add Category Project"
+      description: "Manage pitch category projects"
     },
     { 
       id: "updates", 
       name: "Updates Page", 
       icon: Calendar, 
-      description: "Manage announcements and events",
-      addLabel: "Add Update"
+      description: "Manage announcements and events"
     }
   ];
 
@@ -115,11 +108,19 @@ export function AdminDashboard() {
                   </div>
                   <div className="flex gap-2">
                     <Button 
-                      onClick={() => setIsAddMode(!isAddMode)}
+                      variant={isAddMode ? "outline" : "default"}
+                      onClick={() => setIsAddMode(true)}
                       className="bg-purple-600 hover:bg-purple-700"
                     >
                       <Plus className="w-4 h-4 mr-2" />
-                      {section.addLabel}
+                      Add Product
+                    </Button>
+                    <Button 
+                      variant={!isAddMode ? "outline" : "default"}
+                      onClick={() => setIsAddMode(false)}
+                    >
+                      <Package className="w-4 h-4 mr-2" />
+                      Manage Products
                     </Button>
                   </div>
                 </div>
@@ -457,9 +458,9 @@ function ManageProducts({ sectionId, searchQuery, setSearchQuery }: {
         ];
       case "achievers":
         return [
-          { id: 1, name: "Alice Brown", achievement: "Best Innovation Award", field: "Technology", year: "2025" },
-          { id: 2, name: "Bob Wilson", achievement: "Social Impact Prize", field: "Community", year: "2024" },
-          { id: 3, name: "Carol Davis", achievement: "Research Excellence", field: "Science", year: "2025" },
+          { id: 1, name: "Alice Brown", achievement: "Best Innovation Award", field: "Technology", year: "2025", status: "Featured" },
+          { id: 2, name: "Bob Wilson", achievement: "Social Impact Prize", field: "Community", year: "2024", status: "Active" },
+          { id: 3, name: "Carol Davis", achievement: "Research Excellence", field: "Science", year: "2025", status: "Active" },
         ];
       case "categories":
         return [
@@ -469,9 +470,9 @@ function ManageProducts({ sectionId, searchQuery, setSearchQuery }: {
         ];
       case "updates":
         return [
-          { id: 1, name: "Summer Competition Opens", type: "Opportunity", date: "2025-06-15", priority: "High" },
-          { id: 2, name: "Workshop Series", type: "Event", date: "2025-07-01", priority: "Normal" },
-          { id: 3, name: "New Guidelines", type: "Announcement", date: "2025-06-10", priority: "Normal" },
+          { id: 1, name: "Summer Competition Opens", type: "Opportunity", date: "2025-06-15", priority: "High", status: "Published" },
+          { id: 2, name: "Workshop Series", type: "Event", date: "2025-07-01", priority: "Normal", status: "Draft" },
+          { id: 3, name: "New Guidelines", type: "Announcement", date: "2025-06-10", priority: "Normal", status: "Published" },
         ];
       default:
         return [];
@@ -482,6 +483,25 @@ function ManageProducts({ sectionId, searchQuery, setSearchQuery }: {
   const filteredData = data.filter(item => 
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const getDetailText = (item: any) => {
+    switch (sectionId) {
+      case "store":
+        return `${item.creator} • ${item.category}`;
+      case "weizmann":
+        return `${item.organization} • ${item.deadline}`;
+      case "gallery":
+        return `${item.student} • ${item.department}`;
+      case "achievers":
+        return `${item.field} • ${item.year}`;
+      case "categories":
+        return `${item.author} • ${item.category}`;
+      case "updates":
+        return `${item.type} • ${item.date}`;
+      default:
+        return "";
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -517,20 +537,15 @@ function ManageProducts({ sectionId, searchQuery, setSearchQuery }: {
                 <TableCell className="font-medium">{item.name}</TableCell>
                 <TableCell>
                   <div className="text-sm text-gray-600">
-                    {sectionId === "store" && `${item.creator} • ${item.category}`}
-                    {sectionId === "weizmann" && `${item.organization} • ${item.deadline}`}
-                    {sectionId === "gallery" && `${item.student} • ${item.department}`}
-                    {sectionId === "achievers" && `${item.field} • ${item.year}`}
-                    {sectionId === "categories" && `${item.author} • ${item.category}`}
-                    {sectionId === "updates" && `${item.type} • ${item.date}`}
+                    {getDetailText(item)}
                   </div>
                 </TableCell>
                 <TableCell>
                   <Badge 
                     className={
-                      item.status === "Active" || item.status === "Open" || item.status === "Featured" 
+                      item.status === "Active" || item.status === "Open" || item.status === "Featured" || item.status === "Published"
                         ? "bg-green-100 text-green-800" 
-                        : item.status === "Pending" 
+                        : item.status === "Pending" || item.status === "Draft"
                         ? "bg-yellow-100 text-yellow-800"
                         : "bg-blue-100 text-blue-800"
                     }
