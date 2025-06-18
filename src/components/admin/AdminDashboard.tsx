@@ -28,11 +28,15 @@ import {
   Package,
   Users
 } from "lucide-react";
+import { getDataBySection, addItem, deleteItem } from "@/services/adminDataService";
+import { EditItemModal } from "./EditItemModal";
 
 export function AdminDashboard() {
   const [activeSection, setActiveSection] = useState("store");
   const [searchQuery, setSearchQuery] = useState("");
   const [isAddMode, setIsAddMode] = useState(false);
+  const [editingItem, setEditingItem] = useState(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const sections = [
     { 
@@ -73,6 +77,21 @@ export function AdminDashboard() {
     }
   ];
 
+  const handleEdit = (item: any) => {
+    setEditingItem(item);
+  };
+
+  const handleDelete = (itemId: number) => {
+    if (confirm("Are you sure you want to delete this item?")) {
+      deleteItem(activeSection, itemId);
+      setRefreshKey(prev => prev + 1);
+    }
+  };
+
+  const handleUpdate = () => {
+    setRefreshKey(prev => prev + 1);
+  };
+
   return (
     <div className="space-y-8">
       <div className="text-center">
@@ -108,15 +127,15 @@ export function AdminDashboard() {
                   </div>
                   <div className="flex gap-2">
                     <Button 
-                      variant={isAddMode ? "outline" : "default"}
+                      variant={isAddMode ? "default" : "outline"}
                       onClick={() => setIsAddMode(true)}
-                      className="bg-purple-600 hover:bg-purple-700"
+                      className={isAddMode ? "bg-purple-600 hover:bg-purple-700" : ""}
                     >
                       <Plus className="w-4 h-4 mr-2" />
                       Add Product
                     </Button>
                     <Button 
-                      variant={!isAddMode ? "outline" : "default"}
+                      variant={!isAddMode ? "default" : "outline"}
                       onClick={() => setIsAddMode(false)}
                     >
                       <Package className="w-4 h-4 mr-2" />
@@ -127,20 +146,52 @@ export function AdminDashboard() {
               </CardHeader>
               <CardContent>
                 {isAddMode ? (
-                  <AddProductForm sectionId={section.id} onCancel={() => setIsAddMode(false)} />
+                  <AddProductForm 
+                    sectionId={section.id} 
+                    onCancel={() => setIsAddMode(false)}
+                    onAdd={handleUpdate}
+                  />
                 ) : (
-                  <ManageProducts sectionId={section.id} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+                  <ManageProducts 
+                    sectionId={section.id} 
+                    searchQuery={searchQuery} 
+                    setSearchQuery={setSearchQuery}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
+                    refreshKey={refreshKey}
+                  />
                 )}
               </CardContent>
             </Card>
           </TabsContent>
         ))}
       </Tabs>
+
+      <EditItemModal
+        isOpen={!!editingItem}
+        onClose={() => setEditingItem(null)}
+        item={editingItem}
+        sectionId={activeSection}
+        onUpdate={handleUpdate}
+      />
     </div>
   );
 }
 
-function AddProductForm({ sectionId, onCancel }: { sectionId: string; onCancel: () => void }) {
+function AddProductForm({ sectionId, onCancel, onAdd }: { sectionId: string; onCancel: () => void; onAdd: () => void }) {
+  const [formData, setFormData] = useState<any>({});
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = () => {
+    addItem(sectionId, { ...formData, status: "Active" });
+    onAdd();
+    onCancel();
+    setFormData({});
+  };
+
   const getFormFields = () => {
     switch (sectionId) {
       case "store":
@@ -149,42 +200,61 @@ function AddProductForm({ sectionId, onCancel }: { sectionId: string; onCancel: 
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium mb-2">Product/Skill Name</label>
-                <Input placeholder="Enter product or skill name..." />
+                <Input 
+                  placeholder="Enter product or skill name..." 
+                  value={formData.name || ''}
+                  onChange={(e) => handleInputChange('name', e.target.value)}
+                />
               </div>
               <div>
                 <label className="block text-sm font-medium mb-2">Creator Name</label>
-                <Input placeholder="Student name..." />
+                <Input 
+                  placeholder="Student name..." 
+                  value={formData.creator || ''}
+                  onChange={(e) => handleInputChange('creator', e.target.value)}
+                />
               </div>
               <div>
                 <label className="block text-sm font-medium mb-2">Price</label>
-                <Input placeholder="$0.00" />
+                <Input 
+                  placeholder="$0.00" 
+                  value={formData.price || ''}
+                  onChange={(e) => handleInputChange('price', e.target.value)}
+                />
               </div>
               <div>
                 <label className="block text-sm font-medium mb-2">Category</label>
-                <select className="w-full p-2 border rounded-md">
-                  <option>Art</option>
-                  <option>Technology</option>
-                  <option>Crafts</option>
-                  <option>Digital</option>
-                  <option>Skills</option>
+                <select 
+                  className="w-full p-2 border rounded-md"
+                  value={formData.category || ''}
+                  onChange={(e) => handleInputChange('category', e.target.value)}
+                >
+                  <option value="">Select Category</option>
+                  <option value="Art">Art</option>
+                  <option value="Technology">Technology</option>
+                  <option value="Crafts">Crafts</option>
+                  <option value="Digital">Digital</option>
+                  <option value="Skills">Skills</option>
                 </select>
               </div>
             </div>
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium mb-2">Description</label>
-                <Textarea placeholder="Product description..." className="h-24" />
+                <Textarea 
+                  placeholder="Product description..." 
+                  className="h-24" 
+                  value={formData.description || ''}
+                  onChange={(e) => handleInputChange('description', e.target.value)}
+                />
               </div>
               <div>
                 <label className="block text-sm font-medium mb-2">Image URL</label>
-                <Input placeholder="https://..." />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2">Type</label>
-                <select className="w-full p-2 border rounded-md">
-                  <option>Product</option>
-                  <option>Skill Exchange</option>
-                </select>
+                <Input 
+                  placeholder="https://..." 
+                  value={formData.imageUrl || ''}
+                  onChange={(e) => handleInputChange('imageUrl', e.target.value)}
+                />
               </div>
             </div>
           </div>
@@ -422,7 +492,7 @@ function AddProductForm({ sectionId, onCancel }: { sectionId: string; onCancel: 
         <Button variant="outline" onClick={onCancel}>
           Cancel
         </Button>
-        <Button className="bg-green-600 hover:bg-green-700">
+        <Button onClick={handleSubmit} className="bg-green-600 hover:bg-green-700">
           Save Item
         </Button>
       </div>
@@ -430,56 +500,22 @@ function AddProductForm({ sectionId, onCancel }: { sectionId: string; onCancel: 
   );
 }
 
-function ManageProducts({ sectionId, searchQuery, setSearchQuery }: { 
+function ManageProducts({ 
+  sectionId, 
+  searchQuery, 
+  setSearchQuery, 
+  onEdit, 
+  onDelete, 
+  refreshKey 
+}: { 
   sectionId: string; 
   searchQuery: string; 
   setSearchQuery: (query: string) => void;
+  onEdit: (item: any) => void;
+  onDelete: (itemId: number) => void;
+  refreshKey: number;
 }) {
-  // Mock data for different sections
-  const getMockData = () => {
-    switch (sectionId) {
-      case "store":
-        return [
-          { id: 1, name: "Digital Art Collection", creator: "Sarah Johnson", price: "$25", category: "Art", status: "Active" },
-          { id: 2, name: "Smart IoT Device", creator: "Alex Chen", price: "$120", category: "Tech", status: "Active" },
-          { id: 3, name: "Web Development Skills", creator: "Maya Patel", price: "$45/hr", category: "Skills", status: "Active" },
-        ];
-      case "weizmann":
-        return [
-          { id: 1, name: "MIT Innovation Challenge", organization: "MIT", deadline: "2025-07-15", category: "Competition", status: "Open" },
-          { id: 2, name: "Stanford AI Scholarship", organization: "Stanford", deadline: "2025-08-20", category: "Scholarship", status: "Open" },
-          { id: 3, name: "Global Tech Summit", organization: "TechCorp", deadline: "2025-09-10", category: "Conference", status: "Open" },
-        ];
-      case "gallery":
-        return [
-          { id: 1, name: "Smart Campus Navigation", student: "John Doe", department: "CS", status: "Featured" },
-          { id: 2, name: "Eco-Friendly Packaging", student: "Jane Smith", department: "Environmental", status: "Approved" },
-          { id: 3, name: "Mental Health App", student: "Mike Johnson", department: "Psychology", status: "Pending" },
-        ];
-      case "achievers":
-        return [
-          { id: 1, name: "Alice Brown", achievement: "Best Innovation Award", field: "Technology", year: "2025", status: "Featured" },
-          { id: 2, name: "Bob Wilson", achievement: "Social Impact Prize", field: "Community", year: "2024", status: "Active" },
-          { id: 3, name: "Carol Davis", achievement: "Research Excellence", field: "Science", year: "2025", status: "Active" },
-        ];
-      case "categories":
-        return [
-          { id: 1, name: "AI Campus Assistant", author: "Tech Team", category: "Innovations", status: "Featured" },
-          { id: 2, name: "Community Garden", author: "Green Club", category: "Environmental", status: "Active" },
-          { id: 3, name: "Startup Accelerator", author: "Business Students", category: "Internship", status: "Active" },
-        ];
-      case "updates":
-        return [
-          { id: 1, name: "Summer Competition Opens", type: "Opportunity", date: "2025-06-15", priority: "High", status: "Published" },
-          { id: 2, name: "Workshop Series", type: "Event", date: "2025-07-01", priority: "Normal", status: "Draft" },
-          { id: 3, name: "New Guidelines", type: "Announcement", date: "2025-06-10", priority: "Normal", status: "Published" },
-        ];
-      default:
-        return [];
-    }
-  };
-
-  const data = getMockData();
+  const data = getDataBySection(sectionId);
   const filteredData = data.filter(item => 
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -559,11 +595,16 @@ function ManageProducts({ sectionId, searchQuery, setSearchQuery }: {
                       <Eye className="w-4 h-4 mr-1" />
                       View
                     </Button>
-                    <Button size="sm" variant="outline">
+                    <Button size="sm" variant="outline" onClick={() => onEdit(item)}>
                       <Edit className="w-4 h-4 mr-1" />
                       Edit
                     </Button>
-                    <Button size="sm" variant="outline" className="text-red-600 hover:text-red-700">
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="text-red-600 hover:text-red-700"
+                      onClick={() => onDelete(item.id)}
+                    >
                       <Trash2 className="w-4 h-4" />
                     </Button>
                   </div>
