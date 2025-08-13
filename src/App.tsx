@@ -22,6 +22,7 @@ import AdminPanel from "./pages/AdminPanel";
 import Manage from "./pages/Manage";
 import MentorMe from "./pages/MentorMe";
 import EditingPrompts from "./pages/EditingPrompts";
+import Opportunities from "./pages/Opportunities";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,7 @@ const App = () => (
           <Route path="/weizmann-portal" element={<WeizmannPortal />} />
           <Route path="/store" element={<Store />} />
           <Route path="/admin" element={<AdminPanel />} />
+        <Route path="/opportunities" element={<Opportunities />} />
         <Route path="/manage" element={<Manage />} />
         <Route path="/mentor-me" element={<MentorMe />} />
         <Route path="/editing-prompts" element={<EditingPrompts />} />
