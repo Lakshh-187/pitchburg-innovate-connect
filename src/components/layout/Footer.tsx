@@ -48,6 +48,8 @@ export function Footer() {
               <li><Link to="#" className="hover:text-pitchburg-purple transition">FAQ</Link></li>
               <li><Link to="#" className="hover:text-pitchburg-purple transition">Contact Support</Link></li>
               <li><Link to="/manage" className="hover:text-pitchburg-purple transition font-semibold">Manage Content</Link></li>
+              <li><Link to="/mentor-me" className="hover:text-pitchburg-purple transition">Mentor Me</Link></li>
+              <li><Link to="/editing-prompts" className="hover:text-pitchburg-purple transition">Editing Guide</Link></li>
               <li><Link to="/admin" className="hover:text-pitchburg-purple transition text-xs opacity-60">Admin</Link></li>
             </ul>
           </div>

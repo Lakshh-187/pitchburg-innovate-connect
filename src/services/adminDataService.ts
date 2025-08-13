@@ -130,20 +130,4 @@ export const addItem = (sectionId: string, newItem: any) => {
   return itemWithId;
 };
 
-// Hook for components to listen to data changes
-export const useDataSync = (sectionId: string) => {
-  const [data, setData] = useState(() => getDataBySection(sectionId));
-
-  useEffect(() => {
-    const handleDataChange = (event: any) => {
-      if (event.detail.sectionId === sectionId) {
-        setData(getDataBySection(sectionId));
-      }
-    };
-
-    dataEventEmitter.addEventListener('dataChange', handleDataChange);
-    return () => dataEventEmitter.removeEventListener('dataChange', handleDataChange);
-  }, [sectionId]);
-
-  return data;
-};
+// Hook is exported from hooks/useDataSync.ts

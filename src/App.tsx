@@ -20,6 +20,8 @@ import WeizmannPortal from "./pages/WeizmannPortal";
 import Store from "./pages/Store";
 import AdminPanel from "./pages/AdminPanel";
 import Manage from "./pages/Manage";
+import MentorMe from "./pages/MentorMe";
+import EditingPrompts from "./pages/EditingPrompts";
 
 const queryClient = new QueryClient();
 
@@ -44,7 +46,9 @@ const App = () => (
           <Route path="/weizmann-portal" element={<WeizmannPortal />} />
           <Route path="/store" element={<Store />} />
           <Route path="/admin" element={<AdminPanel />} />
-          <Route path="/manage" element={<Manage />} />
+        <Route path="/manage" element={<Manage />} />
+        <Route path="/mentor-me" element={<MentorMe />} />
+        <Route path="/editing-prompts" element={<EditingPrompts />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
